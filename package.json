@@ -1,0 +1,27 @@
+{
+  "name": "@typehub/javascript-sdk",
+  "version": "0.1.0",
+  "description": "SDK to talk to the TypeHub API",
+  "keywords": [
+    "TypeHub",
+    "Schema",
+    "Data",
+    "SDK"
+  ],
+  "author": "Christoph Kappestein",
+  "license": "MIT",
+  "homepage": "https://typehub.cloud/",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "sdkgen-client": "^0.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.3"
+  }
+}
