@@ -3,284 +3,57 @@
  * {@link https://sdkgen.app}
  */
 
-import {ClientAbstract, CredentialsInterface, TokenStoreInterface} from "sdkgen-client"
+import axios, {AxiosRequestConfig} from "axios";
+import {ClientAbstract, TokenStoreInterface} from "sdkgen-client"
+import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
-import Resource from "./Resource";
-import ExploreResource from "./ExploreResource";
-import DocumentByUserResource from "./DocumentByUserResource";
-import DocumentByUserAndDocumentResource from "./DocumentByUserAndDocumentResource";
-import DocumentByUserAndDocumentPreviewResource from "./DocumentByUserAndDocumentPreviewResource";
-import DocumentByUserAndDocumentStarResource from "./DocumentByUserAndDocumentStarResource";
-import DocumentByUserAndDocumentExportResource from "./DocumentByUserAndDocumentExportResource";
-import DocumentByUserAndDocumentForkResource from "./DocumentByUserAndDocumentForkResource";
-import DocumentByUserAndDocumentIssueResource from "./DocumentByUserAndDocumentIssueResource";
-import DocumentByUserAndDocumentIssueAndIdResource from "./DocumentByUserAndDocumentIssueAndIdResource";
-import DocumentByUserAndDocumentIssueAndIdCommentResource from "./DocumentByUserAndDocumentIssueAndIdCommentResource";
-import DocumentByUserAndDocumentPullRequestResource from "./DocumentByUserAndDocumentPullRequestResource";
-import DocumentByUserAndDocumentPullRequestAndIdResource from "./DocumentByUserAndDocumentPullRequestAndIdResource";
-import DocumentByUserAndDocumentPullRequestAndIdCommentResource from "./DocumentByUserAndDocumentPullRequestAndIdCommentResource";
-import DocumentByUserAndDocumentTagResource from "./DocumentByUserAndDocumentTagResource";
-import DocumentByUserAndDocumentTagAndIdResource from "./DocumentByUserAndDocumentTagAndIdResource";
-import DocumentByUserAndDocumentChangelogResource from "./DocumentByUserAndDocumentChangelogResource";
+import {TagTag} from "./TagTag";
+import {PullRequestTag} from "./PullRequestTag";
+import {IssueTag} from "./IssueTag";
+import {DocumentTag} from "./DocumentTag";
+import {DefaultTag} from "./DefaultTag";
 
-export default class Client extends ClientAbstract {
-    public constructor(baseUrl: string, credentials: CredentialsInterface|null = null, tokenStore: TokenStoreInterface|null = null, scopes: Array<string>|null = []) {
-        super(baseUrl, credentials, tokenStore, scopes);
-    }
-
-    /**
-     * Endpoint: /
-     *
-     * 
-     */
-    public async get(): Promise<Resource>
+export class Client extends ClientAbstract {
+    public tag(): TagTag
     {
-        return new Resource(
-            this.baseUrl,
-            await this.newHttpClient()
+        return new TagTag(
+            this.httpClient,
+            this.parser
         );
     }
 
-    /**
-     * Endpoint: /explore
-     *
-     * 
-     */
-    public async getExplore(): Promise<ExploreResource>
+    public pullRequest(): PullRequestTag
     {
-        return new ExploreResource(
-            this.baseUrl,
-            await this.newHttpClient()
+        return new PullRequestTag(
+            this.httpClient,
+            this.parser
         );
     }
 
-    /**
-     * Endpoint: /document/:user
-     *
-     * 
-     */
-    public async getDocumentByUser(user: string): Promise<DocumentByUserResource>
+    public issue(): IssueTag
     {
-        return new DocumentByUserResource(
-            user,
-            this.baseUrl,
-            await this.newHttpClient()
+        return new IssueTag(
+            this.httpClient,
+            this.parser
         );
     }
 
-    /**
-     * Endpoint: /document/:user/:document
-     *
-     * 
-     */
-    public async getDocumentByUserAndDocument(user: string, document: string): Promise<DocumentByUserAndDocumentResource>
+    public document(): DocumentTag
     {
-        return new DocumentByUserAndDocumentResource(
-            user,
-            document,
-            this.baseUrl,
-            await this.newHttpClient()
+        return new DocumentTag(
+            this.httpClient,
+            this.parser
         );
     }
 
-    /**
-     * Endpoint: /document/:user/:document/preview
-     *
-     * 
-     */
-    public async getDocumentByUserAndDocumentPreview(user: string, document: string): Promise<DocumentByUserAndDocumentPreviewResource>
+    public default(): DefaultTag
     {
-        return new DocumentByUserAndDocumentPreviewResource(
-            user,
-            document,
-            this.baseUrl,
-            await this.newHttpClient()
+        return new DefaultTag(
+            this.httpClient,
+            this.parser
         );
     }
 
-    /**
-     * Endpoint: /document/:user/:document/star
-     *
-     * 
-     */
-    public async getDocumentByUserAndDocumentStar(user: string, document: string): Promise<DocumentByUserAndDocumentStarResource>
-    {
-        return new DocumentByUserAndDocumentStarResource(
-            user,
-            document,
-            this.baseUrl,
-            await this.newHttpClient()
-        );
-    }
 
-    /**
-     * Endpoint: /document/:user/:document/export
-     *
-     * 
-     */
-    public async getDocumentByUserAndDocumentExport(user: string, document: string): Promise<DocumentByUserAndDocumentExportResource>
-    {
-        return new DocumentByUserAndDocumentExportResource(
-            user,
-            document,
-            this.baseUrl,
-            await this.newHttpClient()
-        );
-    }
-
-    /**
-     * Endpoint: /document/:user/:document/fork
-     *
-     * 
-     */
-    public async getDocumentByUserAndDocumentFork(user: string, document: string): Promise<DocumentByUserAndDocumentForkResource>
-    {
-        return new DocumentByUserAndDocumentForkResource(
-            user,
-            document,
-            this.baseUrl,
-            await this.newHttpClient()
-        );
-    }
-
-    /**
-     * Endpoint: /document/:user/:document/issue
-     *
-     * 
-     */
-    public async getDocumentByUserAndDocumentIssue(user: string, document: string): Promise<DocumentByUserAndDocumentIssueResource>
-    {
-        return new DocumentByUserAndDocumentIssueResource(
-            user,
-            document,
-            this.baseUrl,
-            await this.newHttpClient()
-        );
-    }
-
-    /**
-     * Endpoint: /document/:user/:document/issue/:id
-     *
-     * 
-     */
-    public async getDocumentByUserAndDocumentIssueAndId(user: string, document: string, id: string): Promise<DocumentByUserAndDocumentIssueAndIdResource>
-    {
-        return new DocumentByUserAndDocumentIssueAndIdResource(
-            user,
-            document,
-            id,
-            this.baseUrl,
-            await this.newHttpClient()
-        );
-    }
-
-    /**
-     * Endpoint: /document/:user/:document/issue/:id/comment
-     *
-     * 
-     */
-    public async getDocumentByUserAndDocumentIssueAndIdComment(user: string, document: string, id: string): Promise<DocumentByUserAndDocumentIssueAndIdCommentResource>
-    {
-        return new DocumentByUserAndDocumentIssueAndIdCommentResource(
-            user,
-            document,
-            id,
-            this.baseUrl,
-            await this.newHttpClient()
-        );
-    }
-
-    /**
-     * Endpoint: /document/:user/:document/pull_request
-     *
-     * 
-     */
-    public async getDocumentByUserAndDocumentPullRequest(user: string, document: string): Promise<DocumentByUserAndDocumentPullRequestResource>
-    {
-        return new DocumentByUserAndDocumentPullRequestResource(
-            user,
-            document,
-            this.baseUrl,
-            await this.newHttpClient()
-        );
-    }
-
-    /**
-     * Endpoint: /document/:user/:document/pull_request/:id
-     *
-     * 
-     */
-    public async getDocumentByUserAndDocumentPullRequestAndId(user: string, document: string, id: string): Promise<DocumentByUserAndDocumentPullRequestAndIdResource>
-    {
-        return new DocumentByUserAndDocumentPullRequestAndIdResource(
-            user,
-            document,
-            id,
-            this.baseUrl,
-            await this.newHttpClient()
-        );
-    }
-
-    /**
-     * Endpoint: /document/:user/:document/pull_request/:id/comment
-     *
-     * 
-     */
-    public async getDocumentByUserAndDocumentPullRequestAndIdComment(user: string, document: string, id: string): Promise<DocumentByUserAndDocumentPullRequestAndIdCommentResource>
-    {
-        return new DocumentByUserAndDocumentPullRequestAndIdCommentResource(
-            user,
-            document,
-            id,
-            this.baseUrl,
-            await this.newHttpClient()
-        );
-    }
-
-    /**
-     * Endpoint: /document/:user/:document/tag
-     *
-     * 
-     */
-    public async getDocumentByUserAndDocumentTag(user: string, document: string): Promise<DocumentByUserAndDocumentTagResource>
-    {
-        return new DocumentByUserAndDocumentTagResource(
-            user,
-            document,
-            this.baseUrl,
-            await this.newHttpClient()
-        );
-    }
-
-    /**
-     * Endpoint: /document/:user/:document/tag/:id
-     *
-     * 
-     */
-    public async getDocumentByUserAndDocumentTagAndId(user: string, document: string, id: string): Promise<DocumentByUserAndDocumentTagAndIdResource>
-    {
-        return new DocumentByUserAndDocumentTagAndIdResource(
-            user,
-            document,
-            id,
-            this.baseUrl,
-            await this.newHttpClient()
-        );
-    }
-
-    /**
-     * Endpoint: /document/:user/:document/changelog
-     *
-     * 
-     */
-    public async getDocumentByUserAndDocumentChangelog(user: string, document: string): Promise<DocumentByUserAndDocumentChangelogResource>
-    {
-        return new DocumentByUserAndDocumentChangelogResource(
-            user,
-            document,
-            this.baseUrl,
-            await this.newHttpClient()
-        );
-    }
 
 }

@@ -6,5 +6,4 @@
 /**
  * No schema information available
  */
-export interface Passthru {
-}
+export type Passthru = Record<string, any>;
