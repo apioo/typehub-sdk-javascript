@@ -269,7 +269,7 @@ export class PullRequestTag extends TagAbstract {
      * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async getAll(user: string, document: string, startIndex?: number, count?: number, search?: string): Promise<PullRequestCollection> {
+    public async getAll(user: string, document: string, status?: number, startIndex?: number, count?: number, search?: string): Promise<PullRequestCollection> {
         const url = this.parser.url('/document/:user/:document/pull_request', {
             'user': user,
             'document': document,
@@ -279,6 +279,7 @@ export class PullRequestTag extends TagAbstract {
             url: url,
             method: 'GET',
             params: this.parser.query({
+                'status': status,
                 'startIndex': startIndex,
                 'count': count,
                 'search': search,
