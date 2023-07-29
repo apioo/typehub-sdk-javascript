@@ -11,6 +11,7 @@ import {CommentCollection} from "./CommentCollection";
 import {CommentCreate} from "./CommentCreate";
 import {Issue} from "./Issue";
 import {IssueCollection} from "./IssueCollection";
+import {IssueCreate} from "./IssueCreate";
 import {Message} from "./Message";
 import {MessageException} from "./MessageException";
 
@@ -146,7 +147,7 @@ export class IssueTag extends TagAbstract {
      * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async create(user: string, document: string, payload: IssueCollection): Promise<Message> {
+    public async create(user: string, document: string, payload: IssueCreate): Promise<Message> {
         const url = this.parser.url('/document/:user/:document/issue', {
             'user': user,
             'document': document,

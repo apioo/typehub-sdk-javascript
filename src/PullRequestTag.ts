@@ -14,6 +14,7 @@ import {MessageException} from "./MessageException";
 import {Passthru} from "./Passthru";
 import {PullRequest} from "./PullRequest";
 import {PullRequestCollection} from "./PullRequestCollection";
+import {PullRequestCreate} from "./PullRequestCreate";
 
 export class PullRequestTag extends TagAbstract {
     /**
@@ -188,7 +189,7 @@ export class PullRequestTag extends TagAbstract {
      * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async create(user: string, document: string, payload: PullRequestCollection): Promise<Message> {
+    public async create(user: string, document: string, payload: PullRequestCreate): Promise<Message> {
         const url = this.parser.url('/document/:user/:document/pull_request', {
             'user': user,
             'document': document,
