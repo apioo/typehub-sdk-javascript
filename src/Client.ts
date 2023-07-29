@@ -11,6 +11,7 @@ import {TagTag} from "./TagTag";
 import {PullRequestTag} from "./PullRequestTag";
 import {IssueTag} from "./IssueTag";
 import {DocumentTag} from "./DocumentTag";
+import {ExploreTag} from "./ExploreTag";
 import {DefaultTag} from "./DefaultTag";
 
 export class Client extends ClientAbstract {
@@ -41,6 +42,14 @@ export class Client extends ClientAbstract {
     public document(): DocumentTag
     {
         return new DocumentTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public explore(): ExploreTag
+    {
+        return new ExploreTag(
             this.httpClient,
             this.parser
         );

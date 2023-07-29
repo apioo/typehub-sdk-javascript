@@ -454,45 +454,5 @@ export class DocumentTag extends TagAbstract {
         }
     }
 
-    /**
-     * Returns trending documents
-     *
-     * @returns {Promise<DocumentCollection>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async getAll(startIndex?: number, count?: number, search?: string): Promise<DocumentCollection> {
-        const url = this.parser.url('/explore', {
-        });
-
-        let params: AxiosRequestConfig = {
-            url: url,
-            method: 'GET',
-            params: this.parser.query({
-                'startIndex': startIndex,
-                'count': count,
-                'search': search,
-            }),
-        };
-
-        try {
-            const response = await this.httpClient.request<DocumentCollection>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
-        }
-    }
-
 
 }

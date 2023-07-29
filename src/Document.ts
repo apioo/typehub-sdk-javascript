@@ -4,6 +4,7 @@
  */
 
 import {User} from "./User";
+
 export interface Document {
     id?: number
     user?: User
