@@ -105,7 +105,7 @@ export class DocumentTag extends TagAbstract {
      * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async export(user: string, document: string): Promise<DocumentExportResponse> {
+    public async export(user: string, document: string, payload: DocumentExportRequest): Promise<DocumentExportResponse> {
         const url = this.parser.url('/document/:user/:document/export', {
             'user': user,
             'document': document,
@@ -113,9 +113,10 @@ export class DocumentTag extends TagAbstract {
 
         let params: AxiosRequestConfig = {
             url: url,
-            method: 'GET',
+            method: 'POST',
             params: this.parser.query({
             }),
+            data: payload
         };
 
         try {

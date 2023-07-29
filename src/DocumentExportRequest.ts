@@ -4,8 +4,6 @@
  */
 
 export interface DocumentExportRequest {
-    user?: string
-    document?: string
     version?: string
     format?: string
 }
