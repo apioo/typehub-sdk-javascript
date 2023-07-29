@@ -1,6 +1,6 @@
 {
   "name": "typehub-javascript-sdk",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "SDK to talk to the TypeHub API",
   "keywords": [
     "TypeHub",
