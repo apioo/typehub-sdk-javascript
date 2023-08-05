@@ -4,7 +4,7 @@
  */
 
 import {User} from "./User";
-import {Document} from "./Document";
+
 export interface Document {
     id?: number
     user?: User
