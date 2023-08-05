@@ -46,6 +46,10 @@ export class IssueTag extends TagAbstract {
                 throw error;
             } else if (axios.isAxiosError(error) && error.response) {
                 switch (error.response.status) {
+                    case 400:
+                        throw new MessageException(error.response.data);
+                    case 404:
+                        throw new MessageException(error.response.data);
                     case 500:
                         throw new MessageException(error.response.data);
                     default:
@@ -89,6 +93,10 @@ export class IssueTag extends TagAbstract {
                 throw error;
             } else if (axios.isAxiosError(error) && error.response) {
                 switch (error.response.status) {
+                    case 400:
+                        throw new MessageException(error.response.data);
+                    case 404:
+                        throw new MessageException(error.response.data);
                     case 500:
                         throw new MessageException(error.response.data);
                     default:
@@ -129,6 +137,10 @@ export class IssueTag extends TagAbstract {
                 throw error;
             } else if (axios.isAxiosError(error) && error.response) {
                 switch (error.response.status) {
+                    case 400:
+                        throw new MessageException(error.response.data);
+                    case 404:
+                        throw new MessageException(error.response.data);
                     case 500:
                         throw new MessageException(error.response.data);
                     default:
@@ -169,6 +181,10 @@ export class IssueTag extends TagAbstract {
                 throw error;
             } else if (axios.isAxiosError(error) && error.response) {
                 switch (error.response.status) {
+                    case 400:
+                        throw new MessageException(error.response.data);
+                    case 404:
+                        throw new MessageException(error.response.data);
                     case 500:
                         throw new MessageException(error.response.data);
                     default:
@@ -209,6 +225,10 @@ export class IssueTag extends TagAbstract {
                 throw error;
             } else if (axios.isAxiosError(error) && error.response) {
                 switch (error.response.status) {
+                    case 400:
+                        throw new MessageException(error.response.data);
+                    case 404:
+                        throw new MessageException(error.response.data);
                     case 500:
                         throw new MessageException(error.response.data);
                     default:
@@ -252,6 +272,10 @@ export class IssueTag extends TagAbstract {
                 throw error;
             } else if (axios.isAxiosError(error) && error.response) {
                 switch (error.response.status) {
+                    case 400:
+                        throw new MessageException(error.response.data);
+                    case 404:
+                        throw new MessageException(error.response.data);
                     case 500:
                         throw new MessageException(error.response.data);
                     default:
