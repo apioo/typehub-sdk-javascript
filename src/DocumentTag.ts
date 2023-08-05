@@ -383,7 +383,7 @@ export class DocumentTag extends TagAbstract {
      * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async get(user: string, document: string): Promise<Document> {
+    public async get(user: string, document: string, version?: string): Promise<Document> {
         const url = this.parser.url('/document/:user/:document', {
             'user': user,
             'document': document,
@@ -393,6 +393,7 @@ export class DocumentTag extends TagAbstract {
             url: url,
             method: 'GET',
             params: this.parser.query({
+                'version': version,
             }),
         };
 
