@@ -7,6 +7,7 @@ import axios, {AxiosRequestConfig} from "axios";
 import {ClientAbstract, TokenStoreInterface} from "sdkgen-client"
 import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
+import {StarTag} from "./StarTag";
 import {TagTag} from "./TagTag";
 import {PullRequestTag} from "./PullRequestTag";
 import {IssueTag} from "./IssueTag";
@@ -15,6 +16,14 @@ import {DefaultTag} from "./DefaultTag";
 import {ExploreTag} from "./ExploreTag";
 
 export class Client extends ClientAbstract {
+    public star(): StarTag
+    {
+        return new StarTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
     public tag(): TagTag
     {
         return new TagTag(
