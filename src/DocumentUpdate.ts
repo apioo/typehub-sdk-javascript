@@ -3,6 +3,6 @@
  * {@link https://sdkgen.app}
  */
 
-import {Document} from "./Document";
-export interface DocumentUpdate extends Document {
+export interface DocumentUpdate {
+    spec: any
 }

@@ -3,6 +3,7 @@
  * {@link https://sdkgen.app}
  */
 
-import {Document} from "./Document";
-export interface DocumentCreate extends Document {
+export interface DocumentCreate {
+    name: string
+    description?: string
 }

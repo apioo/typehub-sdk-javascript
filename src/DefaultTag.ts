@@ -8,52 +8,8 @@ import {TagAbstract} from "sdkgen-client"
 import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
 import {About} from "./About";
-import {DocumentPreview} from "./DocumentPreview";
-import {Message} from "./Message";
-import {MessageException} from "./MessageException";
-import {Passthru} from "./Passthru";
 
 export class DefaultTag extends TagAbstract {
-    /**
-     * Generates a preview
-     *
-     * @returns {Promise<DocumentPreview>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async adhocPreview(user: string, document: string, payload: Passthru): Promise<DocumentPreview> {
-        const url = this.parser.url('/document/:user/:document/preview', {
-            'user': user,
-            'document': document,
-        });
-
-        let params: AxiosRequestConfig = {
-            url: url,
-            method: 'POST',
-            params: this.parser.query({
-            }),
-            data: payload
-        };
-
-        try {
-            const response = await this.httpClient.request<DocumentPreview>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
-        }
-    }
-
     /**
      * @returns {Promise<About>}
      * @throws {ClientException}
