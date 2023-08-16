@@ -4,14 +4,12 @@
  */
 
 import {Document} from "./Document";
-import {PullRequestContext} from "./PullRequestContext";
 import {User} from "./User";
 export interface PullRequest {
     id?: number
     status?: number
     source?: Document
     target?: Document
-    context?: PullRequestContext
     user?: User
     title?: string
     updateDate?: string
