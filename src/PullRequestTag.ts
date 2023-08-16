@@ -18,6 +18,53 @@ import {PullRequestCreate} from "./PullRequestCreate";
 
 export class PullRequestTag extends TagAbstract {
     /**
+     * Reacts to a comment
+     *
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async reactComment(user: string, document: string, id: string, comment: string, reaction: string, payload: Passthru): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/pull_request/:id/comment/:comment/:reaction', {
+            'user': user,
+            'document': document,
+            'id': id,
+            'comment': comment,
+            'reaction': reaction,
+        });
+
+        let params: AxiosRequestConfig = {
+            url: url,
+            method: 'POST',
+            params: this.parser.query({
+            }),
+            data: payload
+        };
+
+        try {
+            const response = await this.httpClient.request<Message>(params);
+            return response.data;
+        } catch (error) {
+            if (error instanceof ClientException) {
+                throw error;
+            } else if (axios.isAxiosError(error) && error.response) {
+                switch (error.response.status) {
+                    case 400:
+                        throw new MessageException(error.response.data);
+                    case 404:
+                        throw new MessageException(error.response.data);
+                    case 500:
+                        throw new MessageException(error.response.data);
+                    default:
+                        throw new UnknownStatusCodeException('The server returned an unknown status code');
+                }
+            } else {
+                throw new ClientException('An unknown error occurred: ' + String(error));
+            }
+        }
+    }
+
+    /**
      * Creates a new issue comment
      *
      * @returns {Promise<Message>}
