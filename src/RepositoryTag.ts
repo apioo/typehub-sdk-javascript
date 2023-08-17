@@ -153,7 +153,7 @@ export class RepositoryTag extends TagAbstract {
      * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async getAll(user: string, document: string, status?: number, startIndex?: number, count?: number, search?: string): Promise<RepositoryCollection> {
+    public async getAll(user: string, document: string, startIndex?: number, count?: number, search?: string): Promise<RepositoryCollection> {
         const url = this.parser.url('/document/:user/:document/repository', {
             'user': user,
             'document': document,
@@ -163,7 +163,6 @@ export class RepositoryTag extends TagAbstract {
             url: url,
             method: 'GET',
             params: this.parser.query({
-                'status': status,
                 'startIndex': startIndex,
                 'count': count,
                 'search': search,
