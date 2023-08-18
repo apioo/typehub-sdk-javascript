@@ -14,6 +14,7 @@ export interface Repository {
     username?: string
     password?: string
     folder?: string
+    config?: string
     updateDate?: string
     insertDate?: string
 }

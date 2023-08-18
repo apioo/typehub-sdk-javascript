@@ -4,9 +4,8 @@
  */
 
 import {Tag} from "./Tag";
-import {DocumentPreviewTypes} from "./DocumentPreviewTypes";
 export interface DocumentPreview {
     preview?: string
     tags?: Array<Tag>
-    types?: DocumentPreviewTypes
+    types?: Array<string>
 }
