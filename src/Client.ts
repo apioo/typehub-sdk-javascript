@@ -7,6 +7,7 @@ import axios, {AxiosRequestConfig} from "axios";
 import {ClientAbstract, TokenStoreInterface} from "sdkgen-client"
 import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
+import {DocumentTag} from "./DocumentTag";
 import {RepositoryTag} from "./RepositoryTag";
 import {PullRequestTag} from "./PullRequestTag";
 import {IssueTag} from "./IssueTag";
@@ -14,10 +15,17 @@ import {CommitTag} from "./CommitTag";
 import {TagTag} from "./TagTag";
 import {StarTag} from "./StarTag";
 import {ExploreTag} from "./ExploreTag";
-import {DocumentTag} from "./DocumentTag";
 import {DefaultTag} from "./DefaultTag";
 
 export class Client extends ClientAbstract {
+    public document(): DocumentTag
+    {
+        return new DocumentTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
     public repository(): RepositoryTag
     {
         return new RepositoryTag(
@@ -69,14 +77,6 @@ export class Client extends ClientAbstract {
     public explore(): ExploreTag
     {
         return new ExploreTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public document(): DocumentTag
-    {
-        return new DocumentTag(
             this.httpClient,
             this.parser
         );
