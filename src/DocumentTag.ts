@@ -12,6 +12,7 @@ import {DocumentCollection} from "./DocumentCollection";
 import {DocumentCreate} from "./DocumentCreate";
 import {DocumentExportRequest} from "./DocumentExportRequest";
 import {DocumentExportResponse} from "./DocumentExportResponse";
+import {DocumentPreview} from "./DocumentPreview";
 import {DocumentUpdate} from "./DocumentUpdate";
 import {Message} from "./Message";
 import {MessageException} from "./MessageException";
@@ -271,6 +272,46 @@ export class DocumentTag extends TagAbstract {
                         throw new MessageException(error.response.data);
                     case 404:
                         throw new MessageException(error.response.data);
+                    case 500:
+                        throw new MessageException(error.response.data);
+                    default:
+                        throw new UnknownStatusCodeException('The server returned an unknown status code');
+                }
+            } else {
+                throw new ClientException('An unknown error occurred: ' + String(error));
+            }
+        }
+    }
+
+    /**
+     * Returns a document preview
+     *
+     * @returns {Promise<DocumentPreview>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async showPreview(user: string, document: string, version?: string): Promise<DocumentPreview> {
+        const url = this.parser.url('/document/:user/:document/preview', {
+            'user': user,
+            'document': document,
+        });
+
+        let params: AxiosRequestConfig = {
+            url: url,
+            method: 'GET',
+            params: this.parser.query({
+                'version': version,
+            }),
+        };
+
+        try {
+            const response = await this.httpClient.request<DocumentPreview>(params);
+            return response.data;
+        } catch (error) {
+            if (error instanceof ClientException) {
+                throw error;
+            } else if (axios.isAxiosError(error) && error.response) {
+                switch (error.response.status) {
                     case 500:
                         throw new MessageException(error.response.data);
                     default:

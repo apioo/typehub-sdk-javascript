@@ -3,9 +3,10 @@
  * {@link https://sdkgen.app}
  */
 
+import {Repository} from "./Repository";
 import {Tag} from "./Tag";
 export interface DocumentPreview {
-    preview?: string
+    repositories?: Array<Repository>
     tags?: Array<Tag>
     types?: Array<string>
 }

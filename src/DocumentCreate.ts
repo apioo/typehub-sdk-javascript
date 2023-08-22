@@ -6,4 +6,8 @@
 export interface DocumentCreate {
     name: string
     description?: string
+    baseUrl?: string
+    keywords?: string
+    homepage?: string
+    license?: string
 }
