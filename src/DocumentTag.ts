@@ -12,6 +12,7 @@ import {DocumentCollection} from "./DocumentCollection";
 import {DocumentCreate} from "./DocumentCreate";
 import {DocumentExportRequest} from "./DocumentExportRequest";
 import {DocumentExportResponse} from "./DocumentExportResponse";
+import {DocumentMeta} from "./DocumentMeta";
 import {DocumentPreview} from "./DocumentPreview";
 import {DocumentUpdate} from "./DocumentUpdate";
 import {Message} from "./Message";
@@ -19,6 +20,50 @@ import {MessageException} from "./MessageException";
 import {Passthru} from "./Passthru";
 
 export class DocumentTag extends TagAbstract {
+    /**
+     * Updates the meta data of an document
+     *
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async meta(user: string, document: string, payload: DocumentMeta): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/meta', {
+            'user': user,
+            'document': document,
+        });
+
+        let params: AxiosRequestConfig = {
+            url: url,
+            method: 'PUT',
+            params: this.parser.query({
+            }),
+            data: payload
+        };
+
+        try {
+            const response = await this.httpClient.request<Message>(params);
+            return response.data;
+        } catch (error) {
+            if (error instanceof ClientException) {
+                throw error;
+            } else if (axios.isAxiosError(error) && error.response) {
+                switch (error.response.status) {
+                    case 400:
+                        throw new MessageException(error.response.data);
+                    case 404:
+                        throw new MessageException(error.response.data);
+                    case 500:
+                        throw new MessageException(error.response.data);
+                    default:
+                        throw new UnknownStatusCodeException('The server returned an unknown status code');
+                }
+            } else {
+                throw new ClientException('An unknown error occurred: ' + String(error));
+            }
+        }
+    }
+
     /**
      * Reverts your document to this commit
      *
