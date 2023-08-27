@@ -15,6 +15,7 @@ export interface Repository {
     password?: string
     folder?: string
     config?: string
+    sync?: boolean
     updateDate?: string
     insertDate?: string
 }
