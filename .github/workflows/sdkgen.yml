@@ -2,7 +2,7 @@ name: SDKgen
 on: workflow_dispatch
 jobs:
   generate:
-    uses: apioo/sdkgen-generator-action@v0.1
+    uses: apioo/sdkgen-generator-action@v0.1.0
     with:
       client_id: '${{ secrets.SDKGEN_CLIENT_ID }}'
       client_secret: '${{ secrets.SDKGEN_CLIENT_SECRET }}'
