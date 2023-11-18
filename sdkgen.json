@@ -1,0 +1,8 @@
+{
+  "type": "client-typescript",
+  "require": {
+    "typehub/sdk": {
+      "target": "./src"
+    }
+  }
+}
