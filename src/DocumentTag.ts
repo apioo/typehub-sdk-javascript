@@ -21,50 +21,6 @@ import {Passthru} from "./Passthru";
 
 export class DocumentTag extends TagAbstract {
     /**
-     * Updates the meta data of an document
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async meta(user: string, document: string, payload: DocumentMeta): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/meta', {
-            'user': user,
-            'document': document,
-        });
-
-        let params: AxiosRequestConfig = {
-            url: url,
-            method: 'PUT',
-            params: this.parser.query({
-            }),
-            data: payload
-        };
-
-        try {
-            const response = await this.httpClient.request<Message>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
-        }
-    }
-
-    /**
      * Reverts your document to this commit
      *
      * @returns {Promise<Message>}
@@ -110,7 +66,7 @@ export class DocumentTag extends TagAbstract {
     }
 
     /**
-     * Reverts your document to the latest source
+     * Resets your document to the latest source
      *
      * @returns {Promise<Message>}
      * @throws {MessageException}
@@ -154,7 +110,7 @@ export class DocumentTag extends TagAbstract {
     }
 
     /**
-     * Export this document
+     * Fork this document
      *
      * @returns {Promise<Message>}
      * @throws {MessageException}
@@ -197,7 +153,7 @@ export class DocumentTag extends TagAbstract {
     }
 
     /**
-     * Import a TypeSchema document
+     * Import a TypeAPI specification to this document
      *
      * @returns {Promise<Message>}
      * @throws {MessageException}
@@ -329,46 +285,6 @@ export class DocumentTag extends TagAbstract {
     }
 
     /**
-     * Returns a document preview
-     *
-     * @returns {Promise<DocumentPreview>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async showPreview(user: string, document: string, version?: string): Promise<DocumentPreview> {
-        const url = this.parser.url('/document/:user/:document/preview', {
-            'user': user,
-            'document': document,
-        });
-
-        let params: AxiosRequestConfig = {
-            url: url,
-            method: 'GET',
-            params: this.parser.query({
-                'version': version,
-            }),
-        };
-
-        try {
-            const response = await this.httpClient.request<DocumentPreview>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
-        }
-    }
-
-    /**
      * Removes a document
      *
      * @returns {Promise<Message>}
@@ -386,6 +302,50 @@ export class DocumentTag extends TagAbstract {
             method: 'DELETE',
             params: this.parser.query({
             }),
+        };
+
+        try {
+            const response = await this.httpClient.request<Message>(params);
+            return response.data;
+        } catch (error) {
+            if (error instanceof ClientException) {
+                throw error;
+            } else if (axios.isAxiosError(error) && error.response) {
+                switch (error.response.status) {
+                    case 400:
+                        throw new MessageException(error.response.data);
+                    case 404:
+                        throw new MessageException(error.response.data);
+                    case 500:
+                        throw new MessageException(error.response.data);
+                    default:
+                        throw new UnknownStatusCodeException('The server returned an unknown status code');
+                }
+            } else {
+                throw new ClientException('An unknown error occurred: ' + String(error));
+            }
+        }
+    }
+
+    /**
+     * Updates the meta data of an document
+     *
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async meta(user: string, document: string, payload: DocumentMeta): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/meta', {
+            'user': user,
+            'document': document,
+        });
+
+        let params: AxiosRequestConfig = {
+            url: url,
+            method: 'PUT',
+            params: this.parser.query({
+            }),
+            data: payload
         };
 
         try {
@@ -487,6 +447,46 @@ export class DocumentTag extends TagAbstract {
                         throw new MessageException(error.response.data);
                     case 404:
                         throw new MessageException(error.response.data);
+                    case 500:
+                        throw new MessageException(error.response.data);
+                    default:
+                        throw new UnknownStatusCodeException('The server returned an unknown status code');
+                }
+            } else {
+                throw new ClientException('An unknown error occurred: ' + String(error));
+            }
+        }
+    }
+
+    /**
+     * Returns a document preview
+     *
+     * @returns {Promise<DocumentPreview>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async showPreview(user: string, document: string, version?: string): Promise<DocumentPreview> {
+        const url = this.parser.url('/document/:user/:document/preview', {
+            'user': user,
+            'document': document,
+        });
+
+        let params: AxiosRequestConfig = {
+            url: url,
+            method: 'GET',
+            params: this.parser.query({
+                'version': version,
+            }),
+        };
+
+        try {
+            const response = await this.httpClient.request<DocumentPreview>(params);
+            return response.data;
+        } catch (error) {
+            if (error instanceof ClientException) {
+                throw error;
+            } else if (axios.isAxiosError(error) && error.response) {
+                switch (error.response.status) {
                     case 500:
                         throw new MessageException(error.response.data);
                     default:

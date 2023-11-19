@@ -65,7 +65,7 @@ export class PullRequestTag extends TagAbstract {
     }
 
     /**
-     * Creates a new issue comment
+     * Creates a new pull request comment
      *
      * @returns {Promise<Message>}
      * @throws {MessageException}
@@ -290,7 +290,7 @@ export class PullRequestTag extends TagAbstract {
     }
 
     /**
-     * Returns an pull request
+     * Returns a pull request
      *
      * @returns {Promise<PullRequest>}
      * @throws {MessageException}
@@ -334,7 +334,7 @@ export class PullRequestTag extends TagAbstract {
     }
 
     /**
-     * Returns all issues
+     * Returns all pull requests
      *
      * @returns {Promise<PullRequestCollection>}
      * @throws {MessageException}

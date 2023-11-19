@@ -7,28 +7,37 @@ import axios, {AxiosRequestConfig} from "axios";
 import {ClientAbstract, TokenStoreInterface} from "sdkgen-client"
 import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
-import {DocumentTag} from "./DocumentTag";
-import {RepositoryTag} from "./RepositoryTag";
-import {PullRequestTag} from "./PullRequestTag";
-import {IssueTag} from "./IssueTag";
-import {CommitTag} from "./CommitTag";
 import {TagTag} from "./TagTag";
 import {StarTag} from "./StarTag";
+import {TriggerTag} from "./TriggerTag";
+import {PullRequestTag} from "./PullRequestTag";
+import {IssueTag} from "./IssueTag";
 import {ExploreTag} from "./ExploreTag";
-import {DefaultTag} from "./DefaultTag";
+import {DocumentTag} from "./DocumentTag";
+import {CommitTag} from "./CommitTag";
+import {AuthorizationTag} from "./AuthorizationTag";
+import {MetaTag} from "./MetaTag";
 
 export class Client extends ClientAbstract {
-    public document(): DocumentTag
+    public tag(): TagTag
     {
-        return new DocumentTag(
+        return new TagTag(
             this.httpClient,
             this.parser
         );
     }
 
-    public repository(): RepositoryTag
+    public star(): StarTag
     {
-        return new RepositoryTag(
+        return new StarTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public trigger(): TriggerTag
+    {
+        return new TriggerTag(
             this.httpClient,
             this.parser
         );
@@ -50,30 +59,6 @@ export class Client extends ClientAbstract {
         );
     }
 
-    public commit(): CommitTag
-    {
-        return new CommitTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public tag(): TagTag
-    {
-        return new TagTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public star(): StarTag
-    {
-        return new StarTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
     public explore(): ExploreTag
     {
         return new ExploreTag(
@@ -82,9 +67,33 @@ export class Client extends ClientAbstract {
         );
     }
 
-    public default(): DefaultTag
+    public document(): DocumentTag
     {
-        return new DefaultTag(
+        return new DocumentTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public commit(): CommitTag
+    {
+        return new CommitTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public authorization(): AuthorizationTag
+    {
+        return new AuthorizationTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public meta(): MetaTag
+    {
+        return new MetaTag(
             this.httpClient,
             this.parser
         );

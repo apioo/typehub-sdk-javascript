@@ -4,7 +4,7 @@
  */
 
 export interface DocumentCreate {
-    name: string
+    name?: string
     description?: string
     baseUrl?: string
     baseVersion?: string
