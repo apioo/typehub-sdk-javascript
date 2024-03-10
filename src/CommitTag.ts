@@ -9,7 +9,6 @@ import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
 import {Commit} from "./Commit";
 import {CommitCollection} from "./CommitCollection";
-import {Message} from "./Message";
 import {MessageException} from "./MessageException";
 
 export class CommitTag extends TagAbstract {
@@ -17,7 +16,7 @@ export class CommitTag extends TagAbstract {
      * Returns a commit
      *
      * @returns {Promise<Commit>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async get(user: string, document: string, id: string): Promise<Commit> {
@@ -31,7 +30,8 @@ export class CommitTag extends TagAbstract {
             url: url,
             method: 'GET',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
         };
 
         try {
@@ -61,7 +61,7 @@ export class CommitTag extends TagAbstract {
      * Returns all commits for a document
      *
      * @returns {Promise<CommitCollection>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async getAll(user: string, document: string, startIndex?: number, count?: number, search?: string): Promise<CommitCollection> {
@@ -77,7 +77,8 @@ export class CommitTag extends TagAbstract {
                 'startIndex': startIndex,
                 'count': count,
                 'search': search,
-            }),
+            }, [
+            ]),
         };
 
         try {

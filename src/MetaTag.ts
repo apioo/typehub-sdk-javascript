@@ -22,7 +22,8 @@ export class MetaTag extends TagAbstract {
             url: url,
             method: 'GET',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
         };
 
         try {

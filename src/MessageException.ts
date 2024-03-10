@@ -10,7 +10,7 @@ import {Message} from "./Message";
 export class MessageException extends KnownStatusCodeException {
 
     public constructor(private payload: Message) {
-        super();
+        super('The server returned an error');
     }
 
     public getPayload(): Message {

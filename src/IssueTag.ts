@@ -21,7 +21,7 @@ export class IssueTag extends TagAbstract {
      * Reacts to a comment
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async reactComment(user: string, document: string, id: string, comment: string, reaction: string, payload: Passthru): Promise<Message> {
@@ -37,7 +37,8 @@ export class IssueTag extends TagAbstract {
             url: url,
             method: 'POST',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -68,7 +69,7 @@ export class IssueTag extends TagAbstract {
      * Creates a new issue comment
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async createComment(user: string, document: string, id: string, payload: CommentCreate): Promise<Message> {
@@ -82,7 +83,8 @@ export class IssueTag extends TagAbstract {
             url: url,
             method: 'POST',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -113,7 +115,7 @@ export class IssueTag extends TagAbstract {
      * Shows all issue comments
      *
      * @returns {Promise<CommentCollection>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async getAllComments(user: string, document: string, id: string, startIndex?: number, count?: number, search?: string): Promise<CommentCollection> {
@@ -130,7 +132,8 @@ export class IssueTag extends TagAbstract {
                 'startIndex': startIndex,
                 'count': count,
                 'search': search,
-            }),
+            }, [
+            ]),
         };
 
         try {
@@ -160,7 +163,7 @@ export class IssueTag extends TagAbstract {
      * Removes an issue
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async delete(user: string, document: string, id: string): Promise<Message> {
@@ -174,7 +177,8 @@ export class IssueTag extends TagAbstract {
             url: url,
             method: 'DELETE',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
         };
 
         try {
@@ -204,7 +208,7 @@ export class IssueTag extends TagAbstract {
      * Creates a new issue
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async create(user: string, document: string, payload: IssueCreate): Promise<Message> {
@@ -217,7 +221,8 @@ export class IssueTag extends TagAbstract {
             url: url,
             method: 'POST',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -248,7 +253,7 @@ export class IssueTag extends TagAbstract {
      * Returns an issue
      *
      * @returns {Promise<Issue>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async get(user: string, document: string, id: string): Promise<Issue> {
@@ -262,7 +267,8 @@ export class IssueTag extends TagAbstract {
             url: url,
             method: 'GET',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
         };
 
         try {
@@ -292,7 +298,7 @@ export class IssueTag extends TagAbstract {
      * Returns all issues
      *
      * @returns {Promise<IssueCollection>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async getAll(user: string, document: string, status?: number, startIndex?: number, count?: number, search?: string): Promise<IssueCollection> {
@@ -309,7 +315,8 @@ export class IssueTag extends TagAbstract {
                 'startIndex': startIndex,
                 'count': count,
                 'search': search,
-            }),
+            }, [
+            ]),
         };
 
         try {

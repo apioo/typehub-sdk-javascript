@@ -19,7 +19,7 @@ export class TagTag extends TagAbstract {
      * Generates the changelog for the current release
      *
      * @returns {Promise<TagChangelog>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async changelog(user: string, document: string, payload: Passthru): Promise<TagChangelog> {
@@ -32,7 +32,8 @@ export class TagTag extends TagAbstract {
             url: url,
             method: 'POST',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -63,7 +64,7 @@ export class TagTag extends TagAbstract {
      * Creates a new tag
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async create(user: string, document: string, payload: Passthru): Promise<Message> {
@@ -76,7 +77,8 @@ export class TagTag extends TagAbstract {
             url: url,
             method: 'POST',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -107,7 +109,7 @@ export class TagTag extends TagAbstract {
      * Returns a tag
      *
      * @returns {Promise<Tag>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async get(user: string, document: string, id: string): Promise<Tag> {
@@ -121,7 +123,8 @@ export class TagTag extends TagAbstract {
             url: url,
             method: 'GET',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
         };
 
         try {
@@ -151,7 +154,7 @@ export class TagTag extends TagAbstract {
      * Returns all tags for a document
      *
      * @returns {Promise<TagCollection>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async getAll(user: string, document: string, startIndex?: number, count?: number, search?: string): Promise<TagCollection> {
@@ -167,7 +170,8 @@ export class TagTag extends TagAbstract {
                 'startIndex': startIndex,
                 'count': count,
                 'search': search,
-            }),
+            }, [
+            ]),
         };
 
         try {

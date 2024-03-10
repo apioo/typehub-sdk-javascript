@@ -24,7 +24,7 @@ export class DocumentTag extends TagAbstract {
      * Reverts your document to this commit
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async revert(user: string, document: string, id: string, payload: Passthru): Promise<Message> {
@@ -38,7 +38,8 @@ export class DocumentTag extends TagAbstract {
             url: url,
             method: 'POST',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -69,7 +70,7 @@ export class DocumentTag extends TagAbstract {
      * Resets your document to the latest source
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async reset(user: string, document: string, payload: Passthru): Promise<Message> {
@@ -82,7 +83,8 @@ export class DocumentTag extends TagAbstract {
             url: url,
             method: 'POST',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -113,7 +115,7 @@ export class DocumentTag extends TagAbstract {
      * Fork this document
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async fork(user: string, document: string): Promise<Message> {
@@ -126,7 +128,8 @@ export class DocumentTag extends TagAbstract {
             url: url,
             method: 'GET',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
         };
 
         try {
@@ -156,7 +159,7 @@ export class DocumentTag extends TagAbstract {
      * Import a TypeAPI specification to this document
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async import(user: string, document: string, payload: Passthru): Promise<Message> {
@@ -169,7 +172,8 @@ export class DocumentTag extends TagAbstract {
             url: url,
             method: 'POST',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -200,7 +204,7 @@ export class DocumentTag extends TagAbstract {
      * Export this document
      *
      * @returns {Promise<DocumentExportResponse>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async export(user: string, document: string, payload: DocumentExportRequest): Promise<DocumentExportResponse> {
@@ -213,7 +217,8 @@ export class DocumentTag extends TagAbstract {
             url: url,
             method: 'POST',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -244,7 +249,7 @@ export class DocumentTag extends TagAbstract {
      * Stars this document
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async star(user: string, document: string, payload: Passthru): Promise<Message> {
@@ -257,7 +262,8 @@ export class DocumentTag extends TagAbstract {
             url: url,
             method: 'POST',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -288,7 +294,7 @@ export class DocumentTag extends TagAbstract {
      * Removes a document
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async delete(user: string, document: string): Promise<Message> {
@@ -301,7 +307,8 @@ export class DocumentTag extends TagAbstract {
             url: url,
             method: 'DELETE',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
         };
 
         try {
@@ -331,7 +338,7 @@ export class DocumentTag extends TagAbstract {
      * Updates the meta data of an document
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async meta(user: string, document: string, payload: DocumentMeta): Promise<Message> {
@@ -344,7 +351,8 @@ export class DocumentTag extends TagAbstract {
             url: url,
             method: 'PUT',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -375,7 +383,7 @@ export class DocumentTag extends TagAbstract {
      * Updates a document
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async update(user: string, document: string, payload: DocumentUpdate): Promise<Message> {
@@ -388,7 +396,8 @@ export class DocumentTag extends TagAbstract {
             url: url,
             method: 'PUT',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -419,7 +428,7 @@ export class DocumentTag extends TagAbstract {
      * Creates a new document
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async create(user: string, payload: DocumentCreate): Promise<Message> {
@@ -431,7 +440,8 @@ export class DocumentTag extends TagAbstract {
             url: url,
             method: 'POST',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -462,7 +472,7 @@ export class DocumentTag extends TagAbstract {
      * Returns a document preview
      *
      * @returns {Promise<DocumentPreview>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async showPreview(user: string, document: string, version?: string): Promise<DocumentPreview> {
@@ -476,7 +486,8 @@ export class DocumentTag extends TagAbstract {
             method: 'GET',
             params: this.parser.query({
                 'version': version,
-            }),
+            }, [
+            ]),
         };
 
         try {
@@ -502,7 +513,7 @@ export class DocumentTag extends TagAbstract {
      * Returns a document
      *
      * @returns {Promise<Document>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async get(user: string, document: string, version?: string): Promise<Document> {
@@ -516,7 +527,8 @@ export class DocumentTag extends TagAbstract {
             method: 'GET',
             params: this.parser.query({
                 'version': version,
-            }),
+            }, [
+            ]),
         };
 
         try {
@@ -542,7 +554,7 @@ export class DocumentTag extends TagAbstract {
      * Returns all documents
      *
      * @returns {Promise<DocumentCollection>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async getAll(user: string, startIndex?: number, count?: number, search?: string): Promise<DocumentCollection> {
@@ -557,7 +569,8 @@ export class DocumentTag extends TagAbstract {
                 'startIndex': startIndex,
                 'count': count,
                 'search': search,
-            }),
+            }, [
+            ]),
         };
 
         try {

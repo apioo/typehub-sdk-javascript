@@ -21,7 +21,7 @@ export class PullRequestTag extends TagAbstract {
      * Reacts to a comment
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async reactComment(user: string, document: string, id: string, comment: string, reaction: string, payload: Passthru): Promise<Message> {
@@ -37,7 +37,8 @@ export class PullRequestTag extends TagAbstract {
             url: url,
             method: 'POST',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -68,7 +69,7 @@ export class PullRequestTag extends TagAbstract {
      * Creates a new pull request comment
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async createComment(user: string, document: string, id: string, payload: CommentCreate): Promise<Message> {
@@ -82,7 +83,8 @@ export class PullRequestTag extends TagAbstract {
             url: url,
             method: 'POST',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -113,7 +115,7 @@ export class PullRequestTag extends TagAbstract {
      * Shows all pull request comments
      *
      * @returns {Promise<CommentCollection>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async getAllComments(user: string, document: string, id: string, startIndex?: number, count?: number, search?: string): Promise<CommentCollection> {
@@ -130,7 +132,8 @@ export class PullRequestTag extends TagAbstract {
                 'startIndex': startIndex,
                 'count': count,
                 'search': search,
-            }),
+            }, [
+            ]),
         };
 
         try {
@@ -160,7 +163,7 @@ export class PullRequestTag extends TagAbstract {
      * Removes a pull request
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async delete(user: string, document: string, id: string): Promise<Message> {
@@ -174,7 +177,8 @@ export class PullRequestTag extends TagAbstract {
             url: url,
             method: 'DELETE',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
         };
 
         try {
@@ -204,7 +208,7 @@ export class PullRequestTag extends TagAbstract {
      * Merges a pull request
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async update(user: string, document: string, id: string, payload: Passthru): Promise<Message> {
@@ -218,7 +222,8 @@ export class PullRequestTag extends TagAbstract {
             url: url,
             method: 'PUT',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -249,7 +254,7 @@ export class PullRequestTag extends TagAbstract {
      * Creates a new pull request
      *
      * @returns {Promise<Message>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async create(user: string, document: string, payload: PullRequestCreate): Promise<Message> {
@@ -262,7 +267,8 @@ export class PullRequestTag extends TagAbstract {
             url: url,
             method: 'POST',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
             data: payload
         };
 
@@ -293,7 +299,7 @@ export class PullRequestTag extends TagAbstract {
      * Returns a pull request
      *
      * @returns {Promise<PullRequest>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async get(user: string, document: string, id: string): Promise<PullRequest> {
@@ -307,7 +313,8 @@ export class PullRequestTag extends TagAbstract {
             url: url,
             method: 'GET',
             params: this.parser.query({
-            }),
+            }, [
+            ]),
         };
 
         try {
@@ -337,7 +344,7 @@ export class PullRequestTag extends TagAbstract {
      * Returns all pull requests
      *
      * @returns {Promise<PullRequestCollection>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async getAll(user: string, document: string, status?: number, startIndex?: number, count?: number, search?: string): Promise<PullRequestCollection> {
@@ -354,7 +361,8 @@ export class PullRequestTag extends TagAbstract {
                 'startIndex': startIndex,
                 'count': count,
                 'search': search,
-            }),
+            }, [
+            ]),
         };
 
         try {

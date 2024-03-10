@@ -6,4 +6,5 @@
 export interface DocumentExportRequest {
     version?: string
     format?: string
+    namespace?: string
 }

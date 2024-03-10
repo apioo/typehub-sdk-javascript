@@ -8,7 +8,6 @@ import {TagAbstract} from "sdkgen-client"
 import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
 import {DocumentCollection} from "./DocumentCollection";
-import {Message} from "./Message";
 import {MessageException} from "./MessageException";
 
 export class StarTag extends TagAbstract {
@@ -16,7 +15,7 @@ export class StarTag extends TagAbstract {
      * Returns all stared documents for the current user
      *
      * @returns {Promise<DocumentCollection>}
-     * @throws {MessageException}
+     * @throws {MessageExceptionException}
      * @throws {ClientException}
      */
     public async getAll(startIndex?: number, count?: number, search?: string): Promise<DocumentCollection> {
@@ -30,7 +29,8 @@ export class StarTag extends TagAbstract {
                 'startIndex': startIndex,
                 'count': count,
                 'search': search,
-            }),
+            }, [
+            ]),
         };
 
         try {
