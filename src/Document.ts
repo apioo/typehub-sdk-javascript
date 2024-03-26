@@ -12,10 +12,8 @@ export interface Document {
     stars?: number
     name?: string
     description?: string
-    baseUrl?: string
-    keywords?: Array<string>
+    baseVersion?: string
     homepage?: string
-    license?: string
     spec?: any
     updateDate?: string
     insertDate?: string
