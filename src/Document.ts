@@ -13,6 +13,7 @@ export interface Document {
     name?: string
     description?: string
     baseVersion?: string
+    developmentMode?: boolean
     homepage?: string
     spec?: any
     updateDate?: string

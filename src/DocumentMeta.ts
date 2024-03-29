@@ -6,5 +6,6 @@
 export interface DocumentMeta {
     description?: string
     baseVersion?: string
+    developmentMode?: boolean
     homepage?: string
 }
