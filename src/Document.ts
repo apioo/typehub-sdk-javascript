@@ -12,6 +12,7 @@ export interface Document {
     stars?: number
     name?: string
     description?: string
+    private?: boolean
     baseVersion?: string
     developmentMode?: boolean
     homepage?: string

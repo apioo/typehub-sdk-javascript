@@ -5,6 +5,7 @@
 
 export interface DocumentMeta {
     description?: string
+    private?: boolean
     baseVersion?: string
     developmentMode?: boolean
     homepage?: string
