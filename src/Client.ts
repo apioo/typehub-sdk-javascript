@@ -104,6 +104,6 @@ export class Client extends ClientAbstract {
 
     public static build(clientId: string, clientSecret: string, tokenStore: TokenStoreInterface|null, scopes: Array<string>|null): Client
     {
-        return new Client('http://127.0.0.1/website/typehub.cloud/backend/public/', new OAuth2(clientId, clientSecret, 'http://127.0.0.1/website/typehub.cloud/backend/public/authorization/token', '', tokenStore, scopes));
+        return new Client('https://api.typehub.cloud/', new OAuth2(clientId, clientSecret, 'https://api.typehub.cloud/authorization/token', '', tokenStore, scopes));
     }
 }
