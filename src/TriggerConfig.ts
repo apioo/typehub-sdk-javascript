@@ -3,4 +3,6 @@
  * {@link https://sdkgen.app}
  */
 
-export type TriggerConfig = Record<string, string>;
+export interface TriggerConfig extends Record<string, string> {
+}
+

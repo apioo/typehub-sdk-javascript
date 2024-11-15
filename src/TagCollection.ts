@@ -5,4 +5,7 @@
 
 import {Collection} from "./Collection";
 import {Tag} from "./Tag";
-export type TagCollection = Collection<Tag>;
+
+export interface TagCollection extends Collection<Tag> {
+}
+

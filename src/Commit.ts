@@ -6,6 +6,7 @@
 import {Document} from "./Document";
 import {User} from "./User";
 import {CommitPrevious} from "./CommitPrevious";
+
 export interface Commit {
     id?: number
     document?: Document
@@ -16,3 +17,4 @@ export interface Commit {
     spec?: any
     insertDate?: string
 }
+

@@ -3,8 +3,12 @@
  * {@link https://sdkgen.app}
  */
 
+/**
+ * Common error message
+ */
 export interface CommonMessage {
     success?: boolean
     message?: string
     id?: string
 }
+

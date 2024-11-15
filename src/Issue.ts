@@ -5,6 +5,7 @@
 
 import {User} from "./User";
 import {Document} from "./Document";
+
 export interface Issue {
     id?: number
     user?: User
@@ -14,3 +15,4 @@ export interface Issue {
     updateDate?: string
     insertDate?: string
 }
+

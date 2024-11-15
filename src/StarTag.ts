@@ -15,7 +15,7 @@ export class StarTag extends TagAbstract {
      * Returns all stared documents for the current user
      *
      * @returns {Promise<DocumentCollection>}
-     * @throws {MessageExceptionException}
+     * @throws {MessageException}
      * @throws {ClientException}
      */
     public async getAll(startIndex?: number, count?: number, search?: string): Promise<DocumentCollection> {
@@ -25,6 +25,8 @@ export class StarTag extends TagAbstract {
         let params: AxiosRequestConfig = {
             url: url,
             method: 'GET',
+            headers: {
+            },
             params: this.parser.query({
                 'startIndex': startIndex,
                 'count': count,
@@ -40,16 +42,21 @@ export class StarTag extends TagAbstract {
             if (error instanceof ClientException) {
                 throw error;
             } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
+                const statusCode = error.response.status;
+
+                if (statusCode === 400) {
+                    throw new MessageException(error.response.data);
                 }
+
+                if (statusCode === 404) {
+                    throw new MessageException(error.response.data);
+                }
+
+                if (statusCode === 500) {
+                    throw new MessageException(error.response.data);
+                }
+
+                throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
             } else {
                 throw new ClientException('An unknown error occurred: ' + String(error));
             }

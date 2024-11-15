@@ -4,9 +4,10 @@
  */
 
 export interface DocumentCreate {
-    name: string
+    name?: string
     description?: string
     private?: boolean
     baseVersion?: string
     homepage?: string
 }
+

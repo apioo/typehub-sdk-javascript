@@ -5,4 +5,7 @@
 
 import {Collection} from "./Collection";
 import {Comment} from "./Comment";
-export type CommentCollection = Collection<Comment>;
+
+export interface CommentCollection extends Collection<Comment> {
+}
+

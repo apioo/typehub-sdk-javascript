@@ -16,22 +16,24 @@ import {TriggerCreate} from "./TriggerCreate";
 
 export class TriggerTag extends TagAbstract {
     /**
-     * Executes a trigger
+     * Creates a new trigger
      *
      * @returns {Promise<Message>}
-     * @throws {MessageExceptionException}
+     * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async execute(user: string, document: string, id: string, payload: Passthru): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/trigger/:id/execute', {
+    public async create(user: string, document: string, payload: TriggerCreate): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/trigger', {
             'user': user,
             'document': document,
-            'id': id,
         });
 
         let params: AxiosRequestConfig = {
             url: url,
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
             params: this.parser.query({
             }, [
             ]),
@@ -45,16 +47,21 @@ export class TriggerTag extends TagAbstract {
             if (error instanceof ClientException) {
                 throw error;
             } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
+                const statusCode = error.response.status;
+
+                if (statusCode === 400) {
+                    throw new MessageException(error.response.data);
                 }
+
+                if (statusCode === 404) {
+                    throw new MessageException(error.response.data);
+                }
+
+                if (statusCode === 500) {
+                    throw new MessageException(error.response.data);
+                }
+
+                throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
             } else {
                 throw new ClientException('An unknown error occurred: ' + String(error));
             }
@@ -65,7 +72,7 @@ export class TriggerTag extends TagAbstract {
      * Removes a trigger
      *
      * @returns {Promise<Message>}
-     * @throws {MessageExceptionException}
+     * @throws {MessageException}
      * @throws {ClientException}
      */
     public async delete(user: string, document: string, id: string): Promise<Message> {
@@ -78,6 +85,8 @@ export class TriggerTag extends TagAbstract {
         let params: AxiosRequestConfig = {
             url: url,
             method: 'DELETE',
+            headers: {
+            },
             params: this.parser.query({
             }, [
             ]),
@@ -90,16 +99,21 @@ export class TriggerTag extends TagAbstract {
             if (error instanceof ClientException) {
                 throw error;
             } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
+                const statusCode = error.response.status;
+
+                if (statusCode === 400) {
+                    throw new MessageException(error.response.data);
                 }
+
+                if (statusCode === 404) {
+                    throw new MessageException(error.response.data);
+                }
+
+                if (statusCode === 500) {
+                    throw new MessageException(error.response.data);
+                }
+
+                throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
             } else {
                 throw new ClientException('An unknown error occurred: ' + String(error));
             }
@@ -107,21 +121,25 @@ export class TriggerTag extends TagAbstract {
     }
 
     /**
-     * Creates a new trigger
+     * Executes a trigger
      *
      * @returns {Promise<Message>}
-     * @throws {MessageExceptionException}
+     * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async create(user: string, document: string, payload: TriggerCreate): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/trigger', {
+    public async execute(user: string, document: string, id: string, payload: Passthru): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/trigger/:id/execute', {
             'user': user,
             'document': document,
+            'id': id,
         });
 
         let params: AxiosRequestConfig = {
             url: url,
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
             params: this.parser.query({
             }, [
             ]),
@@ -135,16 +153,21 @@ export class TriggerTag extends TagAbstract {
             if (error instanceof ClientException) {
                 throw error;
             } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
+                const statusCode = error.response.status;
+
+                if (statusCode === 400) {
+                    throw new MessageException(error.response.data);
                 }
+
+                if (statusCode === 404) {
+                    throw new MessageException(error.response.data);
+                }
+
+                if (statusCode === 500) {
+                    throw new MessageException(error.response.data);
+                }
+
+                throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
             } else {
                 throw new ClientException('An unknown error occurred: ' + String(error));
             }
@@ -155,7 +178,7 @@ export class TriggerTag extends TagAbstract {
      * Returns a trigger
      *
      * @returns {Promise<Trigger>}
-     * @throws {MessageExceptionException}
+     * @throws {MessageException}
      * @throws {ClientException}
      */
     public async get(user: string, document: string, id: string): Promise<Trigger> {
@@ -168,6 +191,8 @@ export class TriggerTag extends TagAbstract {
         let params: AxiosRequestConfig = {
             url: url,
             method: 'GET',
+            headers: {
+            },
             params: this.parser.query({
             }, [
             ]),
@@ -180,16 +205,21 @@ export class TriggerTag extends TagAbstract {
             if (error instanceof ClientException) {
                 throw error;
             } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
+                const statusCode = error.response.status;
+
+                if (statusCode === 400) {
+                    throw new MessageException(error.response.data);
                 }
+
+                if (statusCode === 404) {
+                    throw new MessageException(error.response.data);
+                }
+
+                if (statusCode === 500) {
+                    throw new MessageException(error.response.data);
+                }
+
+                throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
             } else {
                 throw new ClientException('An unknown error occurred: ' + String(error));
             }
@@ -200,7 +230,7 @@ export class TriggerTag extends TagAbstract {
      * Returns all configured triggers
      *
      * @returns {Promise<TriggerCollection>}
-     * @throws {MessageExceptionException}
+     * @throws {MessageException}
      * @throws {ClientException}
      */
     public async getAll(user: string, document: string, startIndex?: number, count?: number, search?: string): Promise<TriggerCollection> {
@@ -212,6 +242,8 @@ export class TriggerTag extends TagAbstract {
         let params: AxiosRequestConfig = {
             url: url,
             method: 'GET',
+            headers: {
+            },
             params: this.parser.query({
                 'startIndex': startIndex,
                 'count': count,
@@ -227,16 +259,21 @@ export class TriggerTag extends TagAbstract {
             if (error instanceof ClientException) {
                 throw error;
             } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
+                const statusCode = error.response.status;
+
+                if (statusCode === 400) {
+                    throw new MessageException(error.response.data);
                 }
+
+                if (statusCode === 404) {
+                    throw new MessageException(error.response.data);
+                }
+
+                if (statusCode === 500) {
+                    throw new MessageException(error.response.data);
+                }
+
+                throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
             } else {
                 throw new ClientException('An unknown error occurred: ' + String(error));
             }

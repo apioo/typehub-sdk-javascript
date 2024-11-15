@@ -5,6 +5,7 @@
 
 import {Document} from "./Document";
 import {User} from "./User";
+
 export interface Tag {
     id?: string
     document?: Document
@@ -14,3 +15,4 @@ export interface Tag {
     spec?: any
     insertDate?: string
 }
+

@@ -10,3 +10,4 @@ export interface DocumentMeta {
     developmentMode?: boolean
     homepage?: string
 }
+

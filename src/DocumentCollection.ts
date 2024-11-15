@@ -5,4 +5,7 @@
 
 import {Collection} from "./Collection";
 import {Document} from "./Document";
-export type DocumentCollection = Collection<Document>;
+
+export interface DocumentCollection extends Collection<Document> {
+}
+

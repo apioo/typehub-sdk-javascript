@@ -4,7 +4,9 @@
  */
 
 import {Tag} from "./Tag";
+
 export interface DocumentPreview {
     tags?: Array<Tag>
     types?: Array<string>
 }
+

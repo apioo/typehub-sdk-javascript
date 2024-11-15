@@ -5,4 +5,7 @@
 
 import {Collection} from "./Collection";
 import {Commit} from "./Commit";
-export type CommitCollection = Collection<Commit>;
+
+export interface CommitCollection extends Collection<Commit> {
+}
+

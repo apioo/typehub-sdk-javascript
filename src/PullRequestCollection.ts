@@ -5,4 +5,7 @@
 
 import {Collection} from "./Collection";
 import {PullRequest} from "./PullRequest";
-export type PullRequestCollection = Collection<PullRequest>;
+
+export interface PullRequestCollection extends Collection<PullRequest> {
+}
+

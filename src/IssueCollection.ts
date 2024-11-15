@@ -5,4 +5,7 @@
 
 import {Collection} from "./Collection";
 import {Issue} from "./Issue";
-export type IssueCollection = Collection<Issue>;
+
+export interface IssueCollection extends Collection<Issue> {
+}
+

@@ -6,6 +6,7 @@
 import {User} from "./User";
 import {Document} from "./Document";
 import {TriggerConfig} from "./TriggerConfig";
+
 export interface Trigger {
     id?: number
     user?: User
@@ -15,3 +16,4 @@ export interface Trigger {
     updateDate?: string
     insertDate?: string
 }
+
