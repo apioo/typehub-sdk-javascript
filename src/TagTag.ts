@@ -230,11 +230,11 @@ export class TagTag extends TagAbstract {
     /**
      * Triggers a tag
      *
-     * @returns {Promise<Tag>}
+     * @returns {Promise<Message>}
      * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async trigger(user: string, document: string, id: string, payload: Passthru): Promise<Tag> {
+    public async trigger(user: string, document: string, id: string, payload: Passthru): Promise<Message> {
         const url = this.parser.url('/document/:user/:document/tag/:id/trigger', {
             'user': user,
             'document': document,
@@ -254,7 +254,7 @@ export class TagTag extends TagAbstract {
         };
 
         try {
-            const response = await this.httpClient.request<Tag>(params);
+            const response = await this.httpClient.request<Message>(params);
             return response.data;
         } catch (error) {
             if (error instanceof ClientException) {
