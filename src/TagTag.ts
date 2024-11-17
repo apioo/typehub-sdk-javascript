@@ -227,5 +227,59 @@ export class TagTag extends TagAbstract {
         }
     }
 
+    /**
+     * Triggers a tag
+     *
+     * @returns {Promise<Tag>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async trigger(user: string, document: string, id: string, payload: Passthru): Promise<Tag> {
+        const url = this.parser.url('/document/:user/:document/tag/:id/trigger', {
+            'user': user,
+            'document': document,
+            'id': id,
+        });
+
+        let params: AxiosRequestConfig = {
+            url: url,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+            data: payload
+        };
+
+        try {
+            const response = await this.httpClient.request<Tag>(params);
+            return response.data;
+        } catch (error) {
+            if (error instanceof ClientException) {
+                throw error;
+            } else if (axios.isAxiosError(error) && error.response) {
+                const statusCode = error.response.status;
+
+                if (statusCode === 400) {
+                    throw new MessageException(error.response.data);
+                }
+
+                if (statusCode === 404) {
+                    throw new MessageException(error.response.data);
+                }
+
+                if (statusCode === 500) {
+                    throw new MessageException(error.response.data);
+                }
+
+                throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+            } else {
+                throw new ClientException('An unknown error occurred: ' + String(error));
+            }
+        }
+    }
+
 
 }
