@@ -5,8 +5,9 @@
 
 import {Tag} from "./Tag";
 
-export interface DocumentPreview {
+export interface DocumentPreview<DocumentRepository> {
     tags?: Array<Tag>
+    repositories?: Array<DocumentRepository>
     types?: Array<string>
 }
 
