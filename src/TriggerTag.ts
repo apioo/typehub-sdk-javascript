@@ -13,6 +13,7 @@ import {Passthru} from "./Passthru";
 import {Trigger} from "./Trigger";
 import {TriggerCollection} from "./TriggerCollection";
 import {TriggerCreate} from "./TriggerCreate";
+import {TriggerUpdate} from "./TriggerUpdate";
 
 export class TriggerTag extends TagAbstract {
     /**
@@ -254,6 +255,60 @@ export class TriggerTag extends TagAbstract {
 
         try {
             const response = await this.httpClient.request<TriggerCollection>(params);
+            return response.data;
+        } catch (error) {
+            if (error instanceof ClientException) {
+                throw error;
+            } else if (axios.isAxiosError(error) && error.response) {
+                const statusCode = error.response.status;
+
+                if (statusCode === 400) {
+                    throw new MessageException(error.response.data);
+                }
+
+                if (statusCode === 404) {
+                    throw new MessageException(error.response.data);
+                }
+
+                if (statusCode === 500) {
+                    throw new MessageException(error.response.data);
+                }
+
+                throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+            } else {
+                throw new ClientException('An unknown error occurred: ' + String(error));
+            }
+        }
+    }
+
+    /**
+     * Updates a trigger
+     *
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async update(user: string, document: string, id: string, payload: TriggerUpdate): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/trigger/:id', {
+            'user': user,
+            'document': document,
+            'id': id,
+        });
+
+        let params: AxiosRequestConfig = {
+            url: url,
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+            data: payload
+        };
+
+        try {
+            const response = await this.httpClient.request<Message>(params);
             return response.data;
         } catch (error) {
             if (error instanceof ClientException) {
