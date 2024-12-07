@@ -7,11 +7,13 @@ import axios, {AxiosRequestConfig} from "axios";
 import {TagAbstract} from "sdkgen-client"
 import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
+import {CommonMessageException} from "./CommonMessageException";
 import {SystemAbout} from "./SystemAbout";
 
 export class MetaTag extends TagAbstract {
     /**
      * @returns {Promise<SystemAbout>}
+     * @throws {CommonMessageException}
      * @throws {ClientException}
      */
     public async getAbout(): Promise<SystemAbout> {
@@ -36,6 +38,10 @@ export class MetaTag extends TagAbstract {
                 throw error;
             } else if (axios.isAxiosError(error) && error.response) {
                 const statusCode = error.response.status;
+
+                if (statusCode >= 0 && statusCode <= 999) {
+                    throw new CommonMessageException(error.response.data);
+                }
 
                 throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
             } else {
