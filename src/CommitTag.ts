@@ -3,12 +3,12 @@
  * {@link https://sdkgen.app}
  */
 
-import axios, {AxiosRequestConfig} from "axios";
-import {TagAbstract} from "sdkgen-client"
+import {TagAbstract, HttpRequest} from "sdkgen-client"
 import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
 import {Commit} from "./Commit";
 import {CommitCollection} from "./CommitCollection";
+import {Message} from "./Message";
 import {MessageException} from "./MessageException";
 
 export class CommitTag extends TagAbstract {
@@ -26,7 +26,7 @@ export class CommitTag extends TagAbstract {
             'id': id,
         });
 
-        let params: AxiosRequestConfig = {
+        let request: HttpRequest = {
             url: url,
             method: 'GET',
             headers: {
@@ -36,34 +36,26 @@ export class CommitTag extends TagAbstract {
             ]),
         };
 
-        try {
-            const response = await this.httpClient.request<Commit>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                const statusCode = error.response.status;
-
-                if (statusCode === 400) {
-                    throw new MessageException(error.response.data);
-                }
-
-                if (statusCode === 404) {
-                    throw new MessageException(error.response.data);
-                }
-
-                if (statusCode === 500) {
-                    throw new MessageException(error.response.data);
-                }
-
-                throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Commit;
         }
-    }
 
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
     /**
      * Returns all commits for a document
      *
@@ -77,7 +69,7 @@ export class CommitTag extends TagAbstract {
             'document': document,
         });
 
-        let params: AxiosRequestConfig = {
+        let request: HttpRequest = {
             url: url,
             method: 'GET',
             headers: {
@@ -90,33 +82,27 @@ export class CommitTag extends TagAbstract {
             ]),
         };
 
-        try {
-            const response = await this.httpClient.request<CommitCollection>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                const statusCode = error.response.status;
-
-                if (statusCode === 400) {
-                    throw new MessageException(error.response.data);
-                }
-
-                if (statusCode === 404) {
-                    throw new MessageException(error.response.data);
-                }
-
-                if (statusCode === 500) {
-                    throw new MessageException(error.response.data);
-                }
-
-                throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as CommitCollection;
         }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
     }
+
 
 
 }

@@ -3,75 +3,26 @@
  * {@link https://sdkgen.app}
  */
 
-import axios, {AxiosRequestConfig} from "axios";
-import {ClientAbstract, CredentialsInterface, TokenStoreInterface} from "sdkgen-client"
+import {ClientAbstract, CredentialsInterface, TokenStoreInterface, HttpRequest} from "sdkgen-client"
 import {OAuth2} from "sdkgen-client"
 import {Anonymous} from "sdkgen-client"
 import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
-import {AuthorizationTag} from "./AuthorizationTag";
-import {CommitTag} from "./CommitTag";
-import {DocumentTag} from "./DocumentTag";
-import {ExploreTag} from "./ExploreTag";
-import {IssueTag} from "./IssueTag";
-import {MetaTag} from "./MetaTag";
-import {PullRequestTag} from "./PullRequestTag";
-import {StarTag} from "./StarTag";
 import {TagTag} from "./TagTag";
+import {StarTag} from "./StarTag";
 import {TriggerTag} from "./TriggerTag";
+import {PullRequestTag} from "./PullRequestTag";
+import {IssueTag} from "./IssueTag";
+import {ExploreTag} from "./ExploreTag";
+import {DocumentTag} from "./DocumentTag";
+import {CommitTag} from "./CommitTag";
+import {AuthorizationTag} from "./AuthorizationTag";
+import {MetaTag} from "./MetaTag";
 
 export class Client extends ClientAbstract {
-    public authorization(): AuthorizationTag
+    public tag(): TagTag
     {
-        return new AuthorizationTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public commit(): CommitTag
-    {
-        return new CommitTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public document(): DocumentTag
-    {
-        return new DocumentTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public explore(): ExploreTag
-    {
-        return new ExploreTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public issue(): IssueTag
-    {
-        return new IssueTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public meta(): MetaTag
-    {
-        return new MetaTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public pullRequest(): PullRequestTag
-    {
-        return new PullRequestTag(
+        return new TagTag(
             this.httpClient,
             this.parser
         );
@@ -85,17 +36,65 @@ export class Client extends ClientAbstract {
         );
     }
 
-    public tag(): TagTag
+    public trigger(): TriggerTag
     {
-        return new TagTag(
+        return new TriggerTag(
             this.httpClient,
             this.parser
         );
     }
 
-    public trigger(): TriggerTag
+    public pullRequest(): PullRequestTag
     {
-        return new TriggerTag(
+        return new PullRequestTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public issue(): IssueTag
+    {
+        return new IssueTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public explore(): ExploreTag
+    {
+        return new ExploreTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public document(): DocumentTag
+    {
+        return new DocumentTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public commit(): CommitTag
+    {
+        return new CommitTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public authorization(): AuthorizationTag
+    {
+        return new AuthorizationTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public meta(): MetaTag
+    {
+        return new MetaTag(
             this.httpClient,
             this.parser
         );
