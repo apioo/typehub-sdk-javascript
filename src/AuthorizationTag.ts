@@ -36,7 +36,7 @@ export class AuthorizationTag extends TagAbstract {
         }
 
         const statusCode = response.status;
-        if (statusCode === 500) {
+        if (statusCode >= 0 && statusCode <= 999) {
             throw new CommonMessageException(await response.json() as CommonMessage);
         }
 
@@ -67,11 +67,7 @@ export class AuthorizationTag extends TagAbstract {
         }
 
         const statusCode = response.status;
-        if (statusCode === 400) {
-            throw new CommonMessageException(await response.json() as CommonMessage);
-        }
-
-        if (statusCode === 500) {
+        if (statusCode >= 0 && statusCode <= 999) {
             throw new CommonMessageException(await response.json() as CommonMessage);
         }
 

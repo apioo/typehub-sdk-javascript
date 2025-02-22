@@ -6,11 +6,14 @@
 import {TagAbstract, HttpRequest} from "sdkgen-client"
 import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
+import {CommonMessage} from "./CommonMessage";
+import {CommonMessageException} from "./CommonMessageException";
 import {SystemAbout} from "./SystemAbout";
 
 export class MetaTag extends TagAbstract {
     /**
      * @returns {Promise<SystemAbout>}
+     * @throws {CommonMessageException}
      * @throws {ClientException}
      */
     public async getAbout(): Promise<SystemAbout> {
@@ -33,6 +36,10 @@ export class MetaTag extends TagAbstract {
         }
 
         const statusCode = response.status;
+        if (statusCode >= 0 && statusCode <= 999) {
+            throw new CommonMessageException(await response.json() as CommonMessage);
+        }
+
         throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
     }
 

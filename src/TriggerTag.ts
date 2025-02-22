@@ -16,17 +16,16 @@ import {TriggerUpdate} from "./TriggerUpdate";
 
 export class TriggerTag extends TagAbstract {
     /**
-     * Executes a trigger
+     * Creates a new trigger
      *
      * @returns {Promise<Message>}
      * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async execute(user: string, document: string, id: string, payload: Passthru): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/trigger/:id/execute', {
+    public async create(user: string, document: string, payload: TriggerCreate): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/trigger', {
             'user': user,
             'document': document,
-            'id': id,
         });
 
         let request: HttpRequest = {
@@ -106,62 +105,17 @@ export class TriggerTag extends TagAbstract {
         throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
     }
     /**
-     * Updates a trigger
+     * Executes a trigger
      *
      * @returns {Promise<Message>}
      * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async update(user: string, document: string, id: string, payload: TriggerUpdate): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/trigger/:id', {
+    public async execute(user: string, document: string, id: string, payload: Passthru): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/trigger/:id/execute', {
             'user': user,
             'document': document,
             'id': id,
-        });
-
-        let request: HttpRequest = {
-            url: url,
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        const response = await this.httpClient.request(request);
-        if (response.ok) {
-            return await response.json() as Message;
-        }
-
-        const statusCode = response.status;
-        if (statusCode === 400) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 404) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 500) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
-    }
-    /**
-     * Creates a new trigger
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async create(user: string, document: string, payload: TriggerCreate): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/trigger', {
-            'user': user,
-            'document': document,
         });
 
         let request: HttpRequest = {
@@ -269,6 +223,52 @@ export class TriggerTag extends TagAbstract {
         const response = await this.httpClient.request(request);
         if (response.ok) {
             return await response.json() as TriggerCollection;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Updates a trigger
+     *
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async update(user: string, document: string, id: string, payload: TriggerUpdate): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/trigger/:id', {
+            'user': user,
+            'document': document,
+            'id': id,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+            data: payload
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Message;
         }
 
         const statusCode = response.status;

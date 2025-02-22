@@ -8,69 +8,21 @@ import {OAuth2} from "sdkgen-client"
 import {Anonymous} from "sdkgen-client"
 import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
-import {TagTag} from "./TagTag";
-import {StarTag} from "./StarTag";
-import {TriggerTag} from "./TriggerTag";
-import {PullRequestTag} from "./PullRequestTag";
-import {IssueTag} from "./IssueTag";
-import {ExploreTag} from "./ExploreTag";
-import {DocumentTag} from "./DocumentTag";
-import {CommitTag} from "./CommitTag";
 import {AuthorizationTag} from "./AuthorizationTag";
+import {CommitTag} from "./CommitTag";
+import {DocumentTag} from "./DocumentTag";
+import {ExploreTag} from "./ExploreTag";
+import {IssueTag} from "./IssueTag";
 import {MetaTag} from "./MetaTag";
+import {PullRequestTag} from "./PullRequestTag";
+import {StarTag} from "./StarTag";
+import {TagTag} from "./TagTag";
+import {TriggerTag} from "./TriggerTag";
 
 export class Client extends ClientAbstract {
-    public tag(): TagTag
+    public authorization(): AuthorizationTag
     {
-        return new TagTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public star(): StarTag
-    {
-        return new StarTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public trigger(): TriggerTag
-    {
-        return new TriggerTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public pullRequest(): PullRequestTag
-    {
-        return new PullRequestTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public issue(): IssueTag
-    {
-        return new IssueTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public explore(): ExploreTag
-    {
-        return new ExploreTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public document(): DocumentTag
-    {
-        return new DocumentTag(
+        return new AuthorizationTag(
             this.httpClient,
             this.parser
         );
@@ -84,9 +36,25 @@ export class Client extends ClientAbstract {
         );
     }
 
-    public authorization(): AuthorizationTag
+    public document(): DocumentTag
     {
-        return new AuthorizationTag(
+        return new DocumentTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public explore(): ExploreTag
+    {
+        return new ExploreTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public issue(): IssueTag
+    {
+        return new IssueTag(
             this.httpClient,
             this.parser
         );
@@ -95,6 +63,38 @@ export class Client extends ClientAbstract {
     public meta(): MetaTag
     {
         return new MetaTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public pullRequest(): PullRequestTag
+    {
+        return new PullRequestTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public star(): StarTag
+    {
+        return new StarTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public tag(): TagTag
+    {
+        return new TagTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public trigger(): TriggerTag
+    {
+        return new TriggerTag(
             this.httpClient,
             this.parser
         );

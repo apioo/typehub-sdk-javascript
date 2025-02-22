@@ -20,240 +20,15 @@ import {Passthru} from "./Passthru";
 
 export class DocumentTag extends TagAbstract {
     /**
-     * Reverts your document to this commit
+     * Creates a new document
      *
      * @returns {Promise<Message>}
      * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async revert(user: string, document: string, id: string, payload: Passthru): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/revert/:id', {
+    public async create(user: string, payload: DocumentCreate): Promise<Message> {
+        const url = this.parser.url('/document/:user', {
             'user': user,
-            'document': document,
-            'id': id,
-        });
-
-        let request: HttpRequest = {
-            url: url,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        const response = await this.httpClient.request(request);
-        if (response.ok) {
-            return await response.json() as Message;
-        }
-
-        const statusCode = response.status;
-        if (statusCode === 400) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 404) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 500) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
-    }
-    /**
-     * Resets your document to the latest source
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async reset(user: string, document: string, payload: Passthru): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/reset', {
-            'user': user,
-            'document': document,
-        });
-
-        let request: HttpRequest = {
-            url: url,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        const response = await this.httpClient.request(request);
-        if (response.ok) {
-            return await response.json() as Message;
-        }
-
-        const statusCode = response.status;
-        if (statusCode === 400) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 404) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 500) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
-    }
-    /**
-     * Fork this document
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async fork(user: string, document: string): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/fork', {
-            'user': user,
-            'document': document,
-        });
-
-        let request: HttpRequest = {
-            url: url,
-            method: 'GET',
-            headers: {
-            },
-            params: this.parser.query({
-            }, [
-            ]),
-        };
-
-        const response = await this.httpClient.request(request);
-        if (response.ok) {
-            return await response.json() as Message;
-        }
-
-        const statusCode = response.status;
-        if (statusCode === 400) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 404) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 500) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
-    }
-    /**
-     * Import a TypeAPI specification to this document
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async import(user: string, document: string, payload: Passthru): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/import', {
-            'user': user,
-            'document': document,
-        });
-
-        let request: HttpRequest = {
-            url: url,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        const response = await this.httpClient.request(request);
-        if (response.ok) {
-            return await response.json() as Message;
-        }
-
-        const statusCode = response.status;
-        if (statusCode === 400) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 404) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 500) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
-    }
-    /**
-     * Export this document
-     *
-     * @returns {Promise<DocumentExportResponse>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async export(user: string, document: string, payload: DocumentExportRequest): Promise<DocumentExportResponse> {
-        const url = this.parser.url('/document/:user/:document/export', {
-            'user': user,
-            'document': document,
-        });
-
-        let request: HttpRequest = {
-            url: url,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        const response = await this.httpClient.request(request);
-        if (response.ok) {
-            return await response.json() as DocumentExportResponse;
-        }
-
-        const statusCode = response.status;
-        if (statusCode === 400) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 404) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 500) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
-    }
-    /**
-     * Stars this document
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async star(user: string, document: string, payload: Passthru): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/star', {
-            'user': user,
-            'document': document,
         });
 
         let request: HttpRequest = {
@@ -332,6 +107,220 @@ export class DocumentTag extends TagAbstract {
         throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
     }
     /**
+     * Export this document
+     *
+     * @returns {Promise<DocumentExportResponse>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async export(user: string, document: string, payload: DocumentExportRequest): Promise<DocumentExportResponse> {
+        const url = this.parser.url('/document/:user/:document/export', {
+            'user': user,
+            'document': document,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+            data: payload
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as DocumentExportResponse;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Fork this document
+     *
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async fork(user: string, document: string): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/fork', {
+            'user': user,
+            'document': document,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'GET',
+            headers: {
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Message;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Returns a document
+     *
+     * @returns {Promise<Document>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async get(user: string, document: string, version?: string): Promise<Document> {
+        const url = this.parser.url('/document/:user/:document', {
+            'user': user,
+            'document': document,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'GET',
+            headers: {
+            },
+            params: this.parser.query({
+                'version': version,
+            }, [
+            ]),
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Document;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Returns all documents
+     *
+     * @returns {Promise<DocumentCollection>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async getAll(user: string, startIndex?: number, count?: number, search?: string): Promise<DocumentCollection> {
+        const url = this.parser.url('/document/:user', {
+            'user': user,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'GET',
+            headers: {
+            },
+            params: this.parser.query({
+                'startIndex': startIndex,
+                'count': count,
+                'search': search,
+            }, [
+            ]),
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as DocumentCollection;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Import a TypeAPI specification to this document
+     *
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async import(user: string, document: string, payload: Passthru): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/import', {
+            'user': user,
+            'document': document,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+            data: payload
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Message;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
      * Updates the meta data of an document
      *
      * @returns {Promise<Message>}
@@ -377,21 +366,21 @@ export class DocumentTag extends TagAbstract {
         throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
     }
     /**
-     * Updates a document
+     * Resets your document to the latest source
      *
      * @returns {Promise<Message>}
      * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async update(user: string, document: string, payload: DocumentUpdate): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document', {
+    public async reset(user: string, document: string, payload: Passthru): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/reset', {
             'user': user,
             'document': document,
         });
 
         let request: HttpRequest = {
             url: url,
-            method: 'PUT',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -422,15 +411,17 @@ export class DocumentTag extends TagAbstract {
         throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
     }
     /**
-     * Creates a new document
+     * Reverts your document to this commit
      *
      * @returns {Promise<Message>}
      * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async create(user: string, payload: DocumentCreate): Promise<Message> {
-        const url = this.parser.url('/document/:user', {
+    public async revert(user: string, document: string, id: string, payload: Passthru): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/revert/:id', {
             'user': user,
+            'document': document,
+            'id': id,
         });
 
         let request: HttpRequest = {
@@ -502,35 +493,44 @@ export class DocumentTag extends TagAbstract {
         throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
     }
     /**
-     * Returns a document
+     * Stars this document
      *
-     * @returns {Promise<Document>}
+     * @returns {Promise<Message>}
      * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async get(user: string, document: string, version?: string): Promise<Document> {
-        const url = this.parser.url('/document/:user/:document', {
+    public async star(user: string, document: string, payload: Passthru): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/star', {
             'user': user,
             'document': document,
         });
 
         let request: HttpRequest = {
             url: url,
-            method: 'GET',
+            method: 'POST',
             headers: {
+                'Content-Type': 'application/json',
             },
             params: this.parser.query({
-                'version': version,
             }, [
             ]),
+            data: payload
         };
 
         const response = await this.httpClient.request(request);
         if (response.ok) {
-            return await response.json() as Document;
+            return await response.json() as Message;
         }
 
         const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
         if (statusCode === 500) {
             throw new MessageException(await response.json() as Message);
         }
@@ -538,33 +538,33 @@ export class DocumentTag extends TagAbstract {
         throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
     }
     /**
-     * Returns all documents
+     * Updates a document
      *
-     * @returns {Promise<DocumentCollection>}
+     * @returns {Promise<Message>}
      * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async getAll(user: string, startIndex?: number, count?: number, search?: string): Promise<DocumentCollection> {
-        const url = this.parser.url('/document/:user', {
+    public async update(user: string, document: string, payload: DocumentUpdate): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document', {
             'user': user,
+            'document': document,
         });
 
         let request: HttpRequest = {
             url: url,
-            method: 'GET',
+            method: 'PUT',
             headers: {
+                'Content-Type': 'application/json',
             },
             params: this.parser.query({
-                'startIndex': startIndex,
-                'count': count,
-                'search': search,
             }, [
             ]),
+            data: payload
         };
 
         const response = await this.httpClient.request(request);
         if (response.ok) {
-            return await response.json() as DocumentCollection;
+            return await response.json() as Message;
         }
 
         const statusCode = response.status;

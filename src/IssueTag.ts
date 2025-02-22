@@ -17,19 +17,16 @@ import {Passthru} from "./Passthru";
 
 export class IssueTag extends TagAbstract {
     /**
-     * Reacts to a comment
+     * Creates a new issue
      *
      * @returns {Promise<Message>}
      * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async reactComment(user: string, document: string, id: string, comment: string, reaction: string, payload: Passthru): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/issue/:id/comment/:comment/:reaction', {
+    public async create(user: string, document: string, payload: IssueCreate): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/issue', {
             'user': user,
             'document': document,
-            'id': id,
-            'comment': comment,
-            'reaction': reaction,
         });
 
         let request: HttpRequest = {
@@ -111,53 +108,6 @@ export class IssueTag extends TagAbstract {
         throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
     }
     /**
-     * Shows all issue comments
-     *
-     * @returns {Promise<CommentCollection>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async getAllComments(user: string, document: string, id: string, startIndex?: number, count?: number, search?: string): Promise<CommentCollection> {
-        const url = this.parser.url('/document/:user/:document/issue/:id/comment', {
-            'user': user,
-            'document': document,
-            'id': id,
-        });
-
-        let request: HttpRequest = {
-            url: url,
-            method: 'GET',
-            headers: {
-            },
-            params: this.parser.query({
-                'startIndex': startIndex,
-                'count': count,
-                'search': search,
-            }, [
-            ]),
-        };
-
-        const response = await this.httpClient.request(request);
-        if (response.ok) {
-            return await response.json() as CommentCollection;
-        }
-
-        const statusCode = response.status;
-        if (statusCode === 400) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 404) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 500) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
-    }
-    /**
      * Removes an issue
      *
      * @returns {Promise<Message>}
@@ -179,51 +129,6 @@ export class IssueTag extends TagAbstract {
             params: this.parser.query({
             }, [
             ]),
-        };
-
-        const response = await this.httpClient.request(request);
-        if (response.ok) {
-            return await response.json() as Message;
-        }
-
-        const statusCode = response.status;
-        if (statusCode === 400) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 404) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 500) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
-    }
-    /**
-     * Creates a new issue
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async create(user: string, document: string, payload: IssueCreate): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/issue', {
-            'user': user,
-            'document': document,
-        });
-
-        let request: HttpRequest = {
-            url: url,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
         };
 
         const response = await this.httpClient.request(request);
@@ -320,6 +225,101 @@ export class IssueTag extends TagAbstract {
         const response = await this.httpClient.request(request);
         if (response.ok) {
             return await response.json() as IssueCollection;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Shows all issue comments
+     *
+     * @returns {Promise<CommentCollection>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async getAllComments(user: string, document: string, id: string, startIndex?: number, count?: number, search?: string): Promise<CommentCollection> {
+        const url = this.parser.url('/document/:user/:document/issue/:id/comment', {
+            'user': user,
+            'document': document,
+            'id': id,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'GET',
+            headers: {
+            },
+            params: this.parser.query({
+                'startIndex': startIndex,
+                'count': count,
+                'search': search,
+            }, [
+            ]),
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as CommentCollection;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Reacts to a comment
+     *
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async reactComment(user: string, document: string, id: string, comment: string, reaction: string, payload: Passthru): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/issue/:id/comment/:comment/:reaction', {
+            'user': user,
+            'document': document,
+            'id': id,
+            'comment': comment,
+            'reaction': reaction,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+            data: payload
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Message;
         }
 
         const statusCode = response.status;
