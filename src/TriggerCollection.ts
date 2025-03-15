@@ -5,4 +5,7 @@
 
 import {Collection} from "./Collection";
 import {Trigger} from "./Trigger";
-export type TriggerCollection = Collection<Trigger>;
+
+export interface TriggerCollection extends Collection<Trigger> {
+}
+

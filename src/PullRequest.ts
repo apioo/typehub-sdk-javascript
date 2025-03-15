@@ -5,6 +5,7 @@
 
 import {Document} from "./Document";
 import {User} from "./User";
+
 export interface PullRequest {
     id?: number
     status?: number
@@ -15,3 +16,4 @@ export interface PullRequest {
     updateDate?: string
     insertDate?: string
 }
+

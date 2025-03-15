@@ -4,5 +4,7 @@
  */
 
 import {Trigger} from "./Trigger";
+
 export interface TriggerCreate extends Trigger {
 }
+

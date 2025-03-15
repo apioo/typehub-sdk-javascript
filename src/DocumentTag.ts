@@ -3,8 +3,7 @@
  * {@link https://sdkgen.app}
  */
 
-import axios, {AxiosRequestConfig} from "axios";
-import {TagAbstract} from "sdkgen-client"
+import {TagAbstract, HttpRequest} from "sdkgen-client"
 import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
 import {Document} from "./Document";
@@ -21,10 +20,401 @@ import {Passthru} from "./Passthru";
 
 export class DocumentTag extends TagAbstract {
     /**
+     * Creates a new document
+     *
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async create(user: string, payload: DocumentCreate): Promise<Message> {
+        const url = this.parser.url('/document/:user', {
+            'user': user,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+            data: payload
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Message;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Removes a document
+     *
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async delete(user: string, document: string): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document', {
+            'user': user,
+            'document': document,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'DELETE',
+            headers: {
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Message;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Export this document
+     *
+     * @returns {Promise<DocumentExportResponse>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async export(user: string, document: string, payload: DocumentExportRequest): Promise<DocumentExportResponse> {
+        const url = this.parser.url('/document/:user/:document/export', {
+            'user': user,
+            'document': document,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+            data: payload
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as DocumentExportResponse;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Fork this document
+     *
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async fork(user: string, document: string): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/fork', {
+            'user': user,
+            'document': document,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'GET',
+            headers: {
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Message;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Returns a document
+     *
+     * @returns {Promise<Document>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async get(user: string, document: string, version?: string): Promise<Document> {
+        const url = this.parser.url('/document/:user/:document', {
+            'user': user,
+            'document': document,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'GET',
+            headers: {
+            },
+            params: this.parser.query({
+                'version': version,
+            }, [
+            ]),
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Document;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Returns all documents
+     *
+     * @returns {Promise<DocumentCollection>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async getAll(user: string, startIndex?: number, count?: number, search?: string): Promise<DocumentCollection> {
+        const url = this.parser.url('/document/:user', {
+            'user': user,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'GET',
+            headers: {
+            },
+            params: this.parser.query({
+                'startIndex': startIndex,
+                'count': count,
+                'search': search,
+            }, [
+            ]),
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as DocumentCollection;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Import a TypeAPI specification to this document
+     *
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async import(user: string, document: string, payload: Passthru): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/import', {
+            'user': user,
+            'document': document,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+            data: payload
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Message;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Updates the meta data of an document
+     *
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async meta(user: string, document: string, payload: DocumentMeta): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/meta', {
+            'user': user,
+            'document': document,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+            data: payload
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Message;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Resets your document to the latest source
+     *
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async reset(user: string, document: string, payload: Passthru): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/reset', {
+            'user': user,
+            'document': document,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+            data: payload
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Message;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
      * Reverts your document to this commit
      *
      * @returns {Promise<Message>}
-     * @throws {MessageExceptionException}
+     * @throws {MessageException}
      * @throws {ClientException}
      */
     public async revert(user: string, document: string, id: string, payload: Passthru): Promise<Message> {
@@ -34,445 +424,43 @@ export class DocumentTag extends TagAbstract {
             'id': id,
         });
 
-        let params: AxiosRequestConfig = {
+        let request: HttpRequest = {
             url: url,
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
             params: this.parser.query({
             }, [
             ]),
             data: payload
         };
 
-        try {
-            const response = await this.httpClient.request<Message>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Message;
         }
-    }
 
-    /**
-     * Resets your document to the latest source
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageExceptionException}
-     * @throws {ClientException}
-     */
-    public async reset(user: string, document: string, payload: Passthru): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/reset', {
-            'user': user,
-            'document': document,
-        });
-
-        let params: AxiosRequestConfig = {
-            url: url,
-            method: 'POST',
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        try {
-            const response = await this.httpClient.request<Message>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
         }
-    }
 
-    /**
-     * Fork this document
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageExceptionException}
-     * @throws {ClientException}
-     */
-    public async fork(user: string, document: string): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/fork', {
-            'user': user,
-            'document': document,
-        });
-
-        let params: AxiosRequestConfig = {
-            url: url,
-            method: 'GET',
-            params: this.parser.query({
-            }, [
-            ]),
-        };
-
-        try {
-            const response = await this.httpClient.request<Message>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
         }
-    }
 
-    /**
-     * Import a TypeAPI specification to this document
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageExceptionException}
-     * @throws {ClientException}
-     */
-    public async import(user: string, document: string, payload: Passthru): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/import', {
-            'user': user,
-            'document': document,
-        });
-
-        let params: AxiosRequestConfig = {
-            url: url,
-            method: 'POST',
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        try {
-            const response = await this.httpClient.request<Message>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
         }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
     }
-
-    /**
-     * Export this document
-     *
-     * @returns {Promise<DocumentExportResponse>}
-     * @throws {MessageExceptionException}
-     * @throws {ClientException}
-     */
-    public async export(user: string, document: string, payload: DocumentExportRequest): Promise<DocumentExportResponse> {
-        const url = this.parser.url('/document/:user/:document/export', {
-            'user': user,
-            'document': document,
-        });
-
-        let params: AxiosRequestConfig = {
-            url: url,
-            method: 'POST',
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        try {
-            const response = await this.httpClient.request<DocumentExportResponse>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
-        }
-    }
-
-    /**
-     * Stars this document
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageExceptionException}
-     * @throws {ClientException}
-     */
-    public async star(user: string, document: string, payload: Passthru): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/star', {
-            'user': user,
-            'document': document,
-        });
-
-        let params: AxiosRequestConfig = {
-            url: url,
-            method: 'POST',
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        try {
-            const response = await this.httpClient.request<Message>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
-        }
-    }
-
-    /**
-     * Removes a document
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageExceptionException}
-     * @throws {ClientException}
-     */
-    public async delete(user: string, document: string): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document', {
-            'user': user,
-            'document': document,
-        });
-
-        let params: AxiosRequestConfig = {
-            url: url,
-            method: 'DELETE',
-            params: this.parser.query({
-            }, [
-            ]),
-        };
-
-        try {
-            const response = await this.httpClient.request<Message>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
-        }
-    }
-
-    /**
-     * Updates the meta data of an document
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageExceptionException}
-     * @throws {ClientException}
-     */
-    public async meta(user: string, document: string, payload: DocumentMeta): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/meta', {
-            'user': user,
-            'document': document,
-        });
-
-        let params: AxiosRequestConfig = {
-            url: url,
-            method: 'PUT',
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        try {
-            const response = await this.httpClient.request<Message>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
-        }
-    }
-
-    /**
-     * Updates a document
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageExceptionException}
-     * @throws {ClientException}
-     */
-    public async update(user: string, document: string, payload: DocumentUpdate): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document', {
-            'user': user,
-            'document': document,
-        });
-
-        let params: AxiosRequestConfig = {
-            url: url,
-            method: 'PUT',
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        try {
-            const response = await this.httpClient.request<Message>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
-        }
-    }
-
-    /**
-     * Creates a new document
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageExceptionException}
-     * @throws {ClientException}
-     */
-    public async create(user: string, payload: DocumentCreate): Promise<Message> {
-        const url = this.parser.url('/document/:user', {
-            'user': user,
-        });
-
-        let params: AxiosRequestConfig = {
-            url: url,
-            method: 'POST',
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        try {
-            const response = await this.httpClient.request<Message>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
-        }
-    }
-
     /**
      * Returns a document preview
      *
      * @returns {Promise<DocumentPreview>}
-     * @throws {MessageExceptionException}
+     * @throws {MessageException}
      * @throws {ClientException}
      */
     public async showPreview(user: string, document: string, version?: string): Promise<DocumentPreview> {
@@ -481,120 +469,120 @@ export class DocumentTag extends TagAbstract {
             'document': document,
         });
 
-        let params: AxiosRequestConfig = {
+        let request: HttpRequest = {
             url: url,
             method: 'GET',
+            headers: {
+            },
             params: this.parser.query({
                 'version': version,
             }, [
             ]),
         };
 
-        try {
-            const response = await this.httpClient.request<DocumentPreview>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as DocumentPreview;
         }
-    }
 
+        const statusCode = response.status;
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
     /**
-     * Returns a document
+     * Stars this document
      *
-     * @returns {Promise<Document>}
-     * @throws {MessageExceptionException}
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
      * @throws {ClientException}
      */
-    public async get(user: string, document: string, version?: string): Promise<Document> {
+    public async star(user: string, document: string, payload: Passthru): Promise<Message> {
+        const url = this.parser.url('/document/:user/:document/star', {
+            'user': user,
+            'document': document,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+            data: payload
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Message;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Updates a document
+     *
+     * @returns {Promise<Message>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async update(user: string, document: string, payload: DocumentUpdate): Promise<Message> {
         const url = this.parser.url('/document/:user/:document', {
             'user': user,
             'document': document,
         });
 
-        let params: AxiosRequestConfig = {
+        let request: HttpRequest = {
             url: url,
-            method: 'GET',
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
             params: this.parser.query({
-                'version': version,
             }, [
             ]),
+            data: payload
         };
 
-        try {
-            const response = await this.httpClient.request<Document>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Message;
         }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
     }
 
-    /**
-     * Returns all documents
-     *
-     * @returns {Promise<DocumentCollection>}
-     * @throws {MessageExceptionException}
-     * @throws {ClientException}
-     */
-    public async getAll(user: string, startIndex?: number, count?: number, search?: string): Promise<DocumentCollection> {
-        const url = this.parser.url('/document/:user', {
-            'user': user,
-        });
-
-        let params: AxiosRequestConfig = {
-            url: url,
-            method: 'GET',
-            params: this.parser.query({
-                'startIndex': startIndex,
-                'count': count,
-                'search': search,
-            }, [
-            ]),
-        };
-
-        try {
-            const response = await this.httpClient.request<DocumentCollection>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    case 400:
-                        throw new MessageException(error.response.data);
-                    case 404:
-                        throw new MessageException(error.response.data);
-                    case 500:
-                        throw new MessageException(error.response.data);
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
-        }
-    }
 
 
 }

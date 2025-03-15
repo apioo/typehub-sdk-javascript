@@ -4,6 +4,7 @@
  */
 
 import {User} from "./User";
+
 export interface Document {
     id?: number
     user?: User
@@ -12,11 +13,12 @@ export interface Document {
     stars?: number
     name?: string
     description?: string
-    baseUrl?: string
-    keywords?: Array<string>
+    private?: boolean
+    baseVersion?: string
+    developmentMode?: boolean
     homepage?: string
-    license?: string
     spec?: any
     updateDate?: string
     insertDate?: string
 }
+

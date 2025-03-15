@@ -4,5 +4,6 @@
  */
 
 export interface DocumentUpdate {
-    spec: any
+    spec?: any
 }
+

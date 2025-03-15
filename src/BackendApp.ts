@@ -4,7 +4,8 @@
  */
 
 import {CommonMetadata} from "./CommonMetadata";
-import {BackendAppToken} from "./BackendAppToken";
+import {BackendToken} from "./BackendToken";
+
 export interface BackendApp {
     id?: number
     userId?: number
@@ -17,5 +18,6 @@ export interface BackendApp {
     metadata?: CommonMetadata
     date?: string
     scopes?: Array<string>
-    tokens?: Array<BackendAppToken>
+    tokens?: Array<BackendToken>
 }
+

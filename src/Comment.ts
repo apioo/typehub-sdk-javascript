@@ -5,6 +5,7 @@
 
 import {User} from "./User";
 import {CommentReactions} from "./CommentReactions";
+
 export interface Comment {
     id?: number
     user?: User
@@ -14,3 +15,4 @@ export interface Comment {
     updateDate?: string
     insertDate?: string
 }
+

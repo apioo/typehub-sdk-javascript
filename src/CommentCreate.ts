@@ -4,5 +4,7 @@
  */
 
 import {Comment} from "./Comment";
+
 export interface CommentCreate extends Comment {
 }
+

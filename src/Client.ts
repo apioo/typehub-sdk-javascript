@@ -3,74 +3,26 @@
  * {@link https://sdkgen.app}
  */
 
-import axios, {AxiosRequestConfig} from "axios";
-import {ClientAbstract, CredentialsInterface, TokenStoreInterface} from "sdkgen-client"
+import {ClientAbstract, CredentialsInterface, TokenStoreInterface, HttpRequest} from "sdkgen-client"
 import {OAuth2} from "sdkgen-client"
+import {Anonymous} from "sdkgen-client"
 import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
-import {TagTag} from "./TagTag";
-import {StarTag} from "./StarTag";
-import {TriggerTag} from "./TriggerTag";
-import {PullRequestTag} from "./PullRequestTag";
-import {IssueTag} from "./IssueTag";
-import {ExploreTag} from "./ExploreTag";
-import {DocumentTag} from "./DocumentTag";
-import {CommitTag} from "./CommitTag";
 import {AuthorizationTag} from "./AuthorizationTag";
+import {CommitTag} from "./CommitTag";
+import {DocumentTag} from "./DocumentTag";
+import {ExploreTag} from "./ExploreTag";
+import {IssueTag} from "./IssueTag";
 import {MetaTag} from "./MetaTag";
+import {PullRequestTag} from "./PullRequestTag";
+import {StarTag} from "./StarTag";
+import {TagTag} from "./TagTag";
+import {TriggerTag} from "./TriggerTag";
 
 export class Client extends ClientAbstract {
-    public tag(): TagTag
+    public authorization(): AuthorizationTag
     {
-        return new TagTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public star(): StarTag
-    {
-        return new StarTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public trigger(): TriggerTag
-    {
-        return new TriggerTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public pullRequest(): PullRequestTag
-    {
-        return new PullRequestTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public issue(): IssueTag
-    {
-        return new IssueTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public explore(): ExploreTag
-    {
-        return new ExploreTag(
-            this.httpClient,
-            this.parser
-        );
-    }
-
-    public document(): DocumentTag
-    {
-        return new DocumentTag(
+        return new AuthorizationTag(
             this.httpClient,
             this.parser
         );
@@ -84,9 +36,25 @@ export class Client extends ClientAbstract {
         );
     }
 
-    public authorization(): AuthorizationTag
+    public document(): DocumentTag
     {
-        return new AuthorizationTag(
+        return new DocumentTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public explore(): ExploreTag
+    {
+        return new ExploreTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public issue(): IssueTag
+    {
+        return new IssueTag(
             this.httpClient,
             this.parser
         );
@@ -100,10 +68,47 @@ export class Client extends ClientAbstract {
         );
     }
 
+    public pullRequest(): PullRequestTag
+    {
+        return new PullRequestTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public star(): StarTag
+    {
+        return new StarTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public tag(): TagTag
+    {
+        return new TagTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
+    public trigger(): TriggerTag
+    {
+        return new TriggerTag(
+            this.httpClient,
+            this.parser
+        );
+    }
+
 
 
     public static build(clientId: string, clientSecret: string, tokenStore: TokenStoreInterface|null, scopes: Array<string>|null): Client
     {
-        return new Client('https://api.typehub.cloud', new OAuth2(clientId, clientSecret, 'https://api.typehub.cloud/authorization/token', '', tokenStore, scopes));
+        return new Client('https://api.typehub.cloud/', new OAuth2(clientId, clientSecret, 'https://api.typehub.cloud/authorization/token', '', tokenStore, scopes));
+    }
+
+    public static buildAnonymous(): Client
+    {
+        return new Client('https://api.typehub.cloud/', new Anonymous());
     }
 }

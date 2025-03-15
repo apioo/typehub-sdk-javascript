@@ -7,3 +7,4 @@ export interface PullRequestCreate {
     title?: string
     description?: string
 }
+

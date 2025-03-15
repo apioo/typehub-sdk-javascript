@@ -9,3 +9,4 @@ export interface TagChangelog {
     version?: string
     changelog?: Array<string>
 }
+

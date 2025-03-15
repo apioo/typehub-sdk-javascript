@@ -10,3 +10,4 @@ export interface CommitPrevious {
     spec?: any
     insertDate?: string
 }
+

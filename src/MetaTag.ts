@@ -3,45 +3,46 @@
  * {@link https://sdkgen.app}
  */
 
-import axios, {AxiosRequestConfig} from "axios";
-import {TagAbstract} from "sdkgen-client"
+import {TagAbstract, HttpRequest} from "sdkgen-client"
 import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
+import {CommonMessage} from "./CommonMessage";
+import {CommonMessageException} from "./CommonMessageException";
 import {SystemAbout} from "./SystemAbout";
 
 export class MetaTag extends TagAbstract {
     /**
      * @returns {Promise<SystemAbout>}
+     * @throws {CommonMessageException}
      * @throws {ClientException}
      */
     public async getAbout(): Promise<SystemAbout> {
         const url = this.parser.url('/', {
         });
 
-        let params: AxiosRequestConfig = {
+        let request: HttpRequest = {
             url: url,
             method: 'GET',
+            headers: {
+            },
             params: this.parser.query({
             }, [
             ]),
         };
 
-        try {
-            const response = await this.httpClient.request<SystemAbout>(params);
-            return response.data;
-        } catch (error) {
-            if (error instanceof ClientException) {
-                throw error;
-            } else if (axios.isAxiosError(error) && error.response) {
-                switch (error.response.status) {
-                    default:
-                        throw new UnknownStatusCodeException('The server returned an unknown status code');
-                }
-            } else {
-                throw new ClientException('An unknown error occurred: ' + String(error));
-            }
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as SystemAbout;
         }
+
+        const statusCode = response.status;
+        if (statusCode >= 0 && statusCode <= 999) {
+            throw new CommonMessageException(await response.json() as CommonMessage);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
     }
+
 
 
 }

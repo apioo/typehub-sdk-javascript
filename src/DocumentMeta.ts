@@ -5,9 +5,9 @@
 
 export interface DocumentMeta {
     description?: string
-    baseUrl?: string
+    private?: boolean
     baseVersion?: string
-    keywords?: string
+    developmentMode?: boolean
     homepage?: string
-    license?: string
 }
+
