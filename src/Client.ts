@@ -104,11 +104,11 @@ export class Client extends ClientAbstract {
 
     public static build(clientId: string, clientSecret: string, tokenStore: TokenStoreInterface|null, scopes: Array<string>|null): Client
     {
-        return new Client('http://localhost', new OAuth2(clientId, clientSecret, 'http://localhost/authorization/token', 'http://localhost/authorization/authorize', tokenStore, scopes));
+        return new Client('https://api.typehub.cloud', new OAuth2(clientId, clientSecret, 'https://api.typehub.cloud/authorization/token', 'https://api.typehub.cloud/authorization/authorize', tokenStore, scopes));
     }
 
     public static buildAnonymous(): Client
     {
-        return new Client('http://localhost', new Anonymous());
+        return new Client('https://api.typehub.cloud', new Anonymous());
     }
 }
