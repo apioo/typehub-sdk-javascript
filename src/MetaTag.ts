@@ -12,6 +12,8 @@ import {SystemAbout} from "./SystemAbout";
 
 export class MetaTag extends TagAbstract {
     /**
+     * Returns meta information and links about the current installed Fusio version
+     *
      * @returns {Promise<SystemAbout>}
      * @throws {CommonMessageException}
      * @throws {ClientException}

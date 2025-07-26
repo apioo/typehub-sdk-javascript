@@ -13,7 +13,6 @@ import {IssueCollection} from "./IssueCollection";
 import {IssueCreate} from "./IssueCreate";
 import {Message} from "./Message";
 import {MessageException} from "./MessageException";
-import {Passthru} from "./Passthru";
 
 export class IssueTag extends TagAbstract {
     /**
@@ -272,54 +271,6 @@ export class IssueTag extends TagAbstract {
         const response = await this.httpClient.request(request);
         if (response.ok) {
             return await response.json() as CommentCollection;
-        }
-
-        const statusCode = response.status;
-        if (statusCode === 400) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 404) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 500) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
-    }
-    /**
-     * Reacts to a comment
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async reactComment(user: string, document: string, id: string, comment: string, reaction: string, payload: Passthru): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/issue/:id/comment/:comment/:reaction', {
-            'user': user,
-            'document': document,
-            'id': id,
-            'comment': comment,
-            'reaction': reaction,
-        });
-
-        let request: HttpRequest = {
-            url: url,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        const response = await this.httpClient.request(request);
-        if (response.ok) {
-            return await response.json() as Message;
         }
 
         const statusCode = response.status;

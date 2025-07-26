@@ -8,102 +8,10 @@ import {ClientException, UnknownStatusCodeException} from "sdkgen-client";
 
 import {Message} from "./Message";
 import {MessageException} from "./MessageException";
-import {Passthru} from "./Passthru";
 import {Tag} from "./Tag";
-import {TagChangelog} from "./TagChangelog";
 import {TagCollection} from "./TagCollection";
 
 export class TagTag extends TagAbstract {
-    /**
-     * Generates the changelog for the current release
-     *
-     * @returns {Promise<TagChangelog>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async changelog(user: string, document: string, payload: Passthru): Promise<TagChangelog> {
-        const url = this.parser.url('/document/:user/:document/changelog', {
-            'user': user,
-            'document': document,
-        });
-
-        let request: HttpRequest = {
-            url: url,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        const response = await this.httpClient.request(request);
-        if (response.ok) {
-            return await response.json() as TagChangelog;
-        }
-
-        const statusCode = response.status;
-        if (statusCode === 400) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 404) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 500) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
-    }
-    /**
-     * Creates a new tag
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async create(user: string, document: string, payload: Passthru): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/tag', {
-            'user': user,
-            'document': document,
-        });
-
-        let request: HttpRequest = {
-            url: url,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        const response = await this.httpClient.request(request);
-        if (response.ok) {
-            return await response.json() as Message;
-        }
-
-        const statusCode = response.status;
-        if (statusCode === 400) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 404) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 500) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
-    }
     /**
      * Removes a tag
      *
@@ -221,52 +129,6 @@ export class TagTag extends TagAbstract {
         const response = await this.httpClient.request(request);
         if (response.ok) {
             return await response.json() as TagCollection;
-        }
-
-        const statusCode = response.status;
-        if (statusCode === 400) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 404) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        if (statusCode === 500) {
-            throw new MessageException(await response.json() as Message);
-        }
-
-        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
-    }
-    /**
-     * Triggers a tag
-     *
-     * @returns {Promise<Message>}
-     * @throws {MessageException}
-     * @throws {ClientException}
-     */
-    public async trigger(user: string, document: string, id: string, payload: Passthru): Promise<Message> {
-        const url = this.parser.url('/document/:user/:document/tag/:id/trigger', {
-            'user': user,
-            'document': document,
-            'id': id,
-        });
-
-        let request: HttpRequest = {
-            url: url,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            params: this.parser.query({
-            }, [
-            ]),
-            data: payload
-        };
-
-        const response = await this.httpClient.request(request);
-        if (response.ok) {
-            return await response.json() as Message;
         }
 
         const statusCode = response.status;
