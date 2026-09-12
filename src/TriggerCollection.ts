@@ -3,8 +3,8 @@
  * {@link https://sdkgen.app}
  */
 
-import {Collection} from "./Collection";
-import {Trigger} from "./Trigger";
+import type {Collection} from "./Collection";
+import type {Trigger} from "./Trigger";
 
 export interface TriggerCollection extends Collection<Trigger> {
 }

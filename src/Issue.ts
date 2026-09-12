@@ -3,8 +3,8 @@
  * {@link https://sdkgen.app}
  */
 
-import {User} from "./User";
-import {Document} from "./Document";
+import type {User} from "./User";
+import type {Document} from "./Document";
 
 export interface Issue {
     id?: number

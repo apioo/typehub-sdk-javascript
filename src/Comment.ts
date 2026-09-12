@@ -3,8 +3,8 @@
  * {@link https://sdkgen.app}
  */
 
-import {User} from "./User";
-import {CommentReactions} from "./CommentReactions";
+import type {User} from "./User";
+import type {CommentReactions} from "./CommentReactions";
 
 export interface Comment {
     id?: number

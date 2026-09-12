@@ -3,8 +3,8 @@
  * {@link https://sdkgen.app}
  */
 
-import {Tag} from "./Tag";
-import {DocumentRepository} from "./DocumentRepository";
+import type {Tag} from "./Tag";
+import type {DocumentRepository} from "./DocumentRepository";
 
 export interface DocumentPreview {
     tags?: Array<Tag>

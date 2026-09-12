@@ -3,7 +3,7 @@
  * {@link https://sdkgen.app}
  */
 
-import {Comment} from "./Comment";
+import type {Comment} from "./Comment";
 
 export interface CommentCreate extends Comment {
 }

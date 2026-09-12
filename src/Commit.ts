@@ -3,9 +3,9 @@
  * {@link https://sdkgen.app}
  */
 
-import {Document} from "./Document";
-import {User} from "./User";
-import {CommitPrevious} from "./CommitPrevious";
+import type {Document} from "./Document";
+import type {User} from "./User";
+import type {CommitPrevious} from "./CommitPrevious";
 
 export interface Commit {
     id?: number

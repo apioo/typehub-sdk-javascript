@@ -3,8 +3,8 @@
  * {@link https://sdkgen.app}
  */
 
-import {Collection} from "./Collection";
-import {Tag} from "./Tag";
+import type {Collection} from "./Collection";
+import type {Tag} from "./Tag";
 
 export interface TagCollection extends Collection<Tag> {
 }

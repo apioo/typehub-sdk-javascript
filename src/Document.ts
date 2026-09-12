@@ -3,7 +3,7 @@
  * {@link https://sdkgen.app}
  */
 
-import {User} from "./User";
+import type {User} from "./User";
 
 export interface Document {
     id?: number

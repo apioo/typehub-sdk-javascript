@@ -3,8 +3,8 @@
  * {@link https://sdkgen.app}
  */
 
-import {Collection} from "./Collection";
-import {Commit} from "./Commit";
+import type {Collection} from "./Collection";
+import type {Commit} from "./Commit";
 
 export interface CommitCollection extends Collection<Commit> {
 }

@@ -3,9 +3,9 @@
  * {@link https://sdkgen.app}
  */
 
-import {User} from "./User";
-import {Document} from "./Document";
-import {TriggerConfig} from "./TriggerConfig";
+import type {User} from "./User";
+import type {Document} from "./Document";
+import type {TriggerConfig} from "./TriggerConfig";
 
 export interface Trigger {
     id?: number

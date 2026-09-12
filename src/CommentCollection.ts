@@ -3,8 +3,8 @@
  * {@link https://sdkgen.app}
  */
 
-import {Collection} from "./Collection";
-import {Comment} from "./Comment";
+import type {Collection} from "./Collection";
+import type {Comment} from "./Comment";
 
 export interface CommentCollection extends Collection<Comment> {
 }

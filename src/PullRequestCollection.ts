@@ -3,8 +3,8 @@
  * {@link https://sdkgen.app}
  */
 
-import {Collection} from "./Collection";
-import {PullRequest} from "./PullRequest";
+import type {Collection} from "./Collection";
+import type {PullRequest} from "./PullRequest";
 
 export interface PullRequestCollection extends Collection<PullRequest> {
 }

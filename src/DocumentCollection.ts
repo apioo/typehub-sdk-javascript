@@ -3,8 +3,8 @@
  * {@link https://sdkgen.app}
  */
 
-import {Collection} from "./Collection";
-import {Document} from "./Document";
+import type {Collection} from "./Collection";
+import type {Document} from "./Document";
 
 export interface DocumentCollection extends Collection<Document> {
 }

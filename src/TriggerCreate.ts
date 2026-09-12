@@ -3,7 +3,7 @@
  * {@link https://sdkgen.app}
  */
 
-import {Trigger} from "./Trigger";
+import type {Trigger} from "./Trigger";
 
 export interface TriggerCreate extends Trigger {
 }

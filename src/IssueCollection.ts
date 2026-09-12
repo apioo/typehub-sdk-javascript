@@ -3,8 +3,8 @@
  * {@link https://sdkgen.app}
  */
 
-import {Collection} from "./Collection";
-import {Issue} from "./Issue";
+import type {Collection} from "./Collection";
+import type {Issue} from "./Issue";
 
 export interface IssueCollection extends Collection<Issue> {
 }

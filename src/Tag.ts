@@ -3,8 +3,8 @@
  * {@link https://sdkgen.app}
  */
 
-import {Document} from "./Document";
-import {User} from "./User";
+import type {Document} from "./Document";
+import type {User} from "./User";
 
 export interface Tag {
     id?: string
