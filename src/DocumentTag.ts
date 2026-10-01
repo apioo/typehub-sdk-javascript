@@ -17,6 +17,7 @@ import {DocumentUpdate} from "./DocumentUpdate";
 import {Message} from "./Message";
 import {MessageException} from "./MessageException";
 import {Passthru} from "./Passthru";
+import {Statistic} from "./Statistic";
 
 export class DocumentTag extends TagAbstract {
     /**
@@ -520,6 +521,49 @@ export class DocumentTag extends TagAbstract {
         const response = await this.httpClient.request(request);
         if (response.ok) {
             return await response.json() as Message;
+        }
+
+        const statusCode = response.status;
+        if (statusCode === 400) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 404) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        if (statusCode === 500) {
+            throw new MessageException(await response.json() as Message);
+        }
+
+        throw new UnknownStatusCodeException('The server returned an unknown status code: ' + statusCode);
+    }
+    /**
+     * Statistic of this document
+     *
+     * @returns {Promise<Statistic>}
+     * @throws {MessageException}
+     * @throws {ClientException}
+     */
+    public async statistic(user: string, document: string): Promise<Statistic> {
+        const url = this.parser.url('/document/:user/:document/statistic', {
+            'user': user,
+            'document': document,
+        });
+
+        let request: HttpRequest = {
+            url: url,
+            method: 'GET',
+            headers: {
+            },
+            params: this.parser.query({
+            }, [
+            ]),
+        };
+
+        const response = await this.httpClient.request(request);
+        if (response.ok) {
+            return await response.json() as Statistic;
         }
 
         const statusCode = response.status;
