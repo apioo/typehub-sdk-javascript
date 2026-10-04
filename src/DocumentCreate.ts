@@ -9,5 +9,6 @@ export interface DocumentCreate {
     private?: boolean
     baseVersion?: string
     homepage?: string
+    releaseInterval?: number
 }
 

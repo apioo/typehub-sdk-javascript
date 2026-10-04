@@ -17,6 +17,7 @@ export interface Document {
     baseVersion?: string
     developmentMode?: boolean
     homepage?: string
+    releaseInterval?: number
     spec?: any
     updateDate?: string
     insertDate?: string

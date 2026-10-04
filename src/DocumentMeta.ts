@@ -9,5 +9,6 @@ export interface DocumentMeta {
     baseVersion?: string
     developmentMode?: boolean
     homepage?: string
+    releaseInterval?: number
 }
 
